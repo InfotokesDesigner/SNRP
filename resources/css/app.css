@@ -1,0 +1,4 @@
+@import 'admin-lte/dist/css/adminlte.min.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
