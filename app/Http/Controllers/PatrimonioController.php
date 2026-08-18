@@ -7,6 +7,7 @@ use App\Models\Pessoa;
 use App\Models\Instituicao;
 use App\Models\TipoPatrimonio;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PatrimonioController extends Controller
 {
@@ -151,18 +152,24 @@ class PatrimonioController extends Controller
      * Mostra os dados do património.
      */
     public function show(Patrimonio $patrimonio)
-    {
-        $patrimonio->load([
-            'tipoPatrimonio',
-            'pessoa',
-            'instituicao'
-        ]);
+{
+    $patrimonio->load([
+        'tipoPatrimonio',
+        'pessoa',
+        'instituicao'
+    ]);
 
-        return view(
-            'patrimonios.show',
-            compact('patrimonio')
+    $qrCode = QrCode::size(180)
+        ->margin(1)
+        ->generate(
+            url('/consulta-patrimonio/' . $patrimonio->codigo)
         );
-    }
+
+    return view(
+        'patrimonios.show',
+        compact('patrimonio', 'qrCode')
+    );
+}
 
 
     /**
@@ -269,7 +276,24 @@ class PatrimonioController extends Controller
                 'Património atualizado com sucesso.'
             );
     }
+/**
+ * Consulta pública de um património através do código.
+ */
+public function consultaPublica(string $codigo)
+{
+    $patrimonio = Patrimonio::with([
+        'tipoPatrimonio',
+        'instituicao',
+        'pessoa'
+    ])
+    ->where('codigo', $codigo)
+    ->firstOrFail();
 
+    return view(
+        'patrimonios.consulta',
+        compact('patrimonio')
+    );
+}
 
     /**
      * Elimina um património.
@@ -285,4 +309,27 @@ class PatrimonioController extends Controller
                 'Património eliminado com sucesso.'
             );
     }
+
+    /**
+ * Consulta pública de um património pelo código.
+ */
+public function consulta($codigo)
+{
+    $patrimonio = Patrimonio::with([
+        'tipoPatrimonio',
+        'pessoa',
+        'instituicao'
+    ])
+    ->where('codigo', $codigo)
+    ->first();
+
+    if (!$patrimonio) {
+        abort(404, 'Património não encontrado.');
+    }
+
+    return view(
+        'patrimonios.consulta',
+        compact('patrimonio')
+    );
+}
 }

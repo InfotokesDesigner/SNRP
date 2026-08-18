@@ -58,6 +58,27 @@
             </div>
 
 
+            {{-- QR Code --}}
+            <div class="col-md-4 text-center">
+
+                <label class="form-label text-muted d-block">
+                    QR Code
+                </label>
+
+                <div class="border rounded p-3 bg-white d-inline-block">
+
+                    {!! $qrCode !!}
+
+                </div>
+
+                <small class="text-muted d-block mt-2">
+                    Aponte a câmera do telemóvel para consultar
+                    este património.
+                </small>
+
+            </div>
+
+
             {{-- Estado --}}
             <div class="col-md-4">
 
