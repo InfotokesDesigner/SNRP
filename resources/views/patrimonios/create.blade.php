@@ -49,33 +49,7 @@
 
             <div class="row g-3">
 
-                {{-- Código --}}
-                <div class="col-md-4">
-
-                    <label for="codigo" class="form-label">
-                        Código do Património *
-                    </label>
-
-                    <input
-                        type="text"
-                        id="codigo"
-                        name="codigo"
-                        class="form-control @error('codigo') is-invalid @enderror"
-                        value="{{ old('codigo') }}"
-                        placeholder="Ex.: PAT-000001"
-                        required
-                    >
-
-                    @error('codigo')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-
-                </div>
-
-
-                {{-- Tipo --}}
+             {{-- Tipo --}}
                 <div class="col-md-4">
 
                     <label for="tipo_patrimonio_id" class="form-label">

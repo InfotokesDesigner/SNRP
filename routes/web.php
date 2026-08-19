@@ -127,15 +127,7 @@ Route::get(
 | Autenticação
 |--------------------------------------------------------------------------
 */
-/*
-|--------------------------------------------------------------------------
-| Consulta pública de património
-|--------------------------------------------------------------------------
-*/
 
-Route::get('/consulta-patrimonio/{codigo}', [
-    PatrimonioController::class,
-    'consulta'
-])->name('patrimonios.consulta');
+
 
 require __DIR__.'/auth.php';

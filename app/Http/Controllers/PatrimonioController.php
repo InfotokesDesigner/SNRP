@@ -76,76 +76,140 @@ class PatrimonioController extends Controller
     /**
      * Guarda um novo património.
      */
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
+    /**
+ * Guarda um novo património.
+ */
+public function store(Request $request)
+{
+    $validated = $request->validate([
 
-            'codigo' => [
-                'required',
-                'string',
-                'max:50',
-                'unique:patrimonios,codigo'
-            ],
+        'tipo_patrimonio_id' => [
+            'required',
+            'exists:tipo_patrimonios,id'
+        ],
 
-            'tipo_patrimonio_id' => [
-                'required',
-                'exists:tipo_patrimonios,id'
-            ],
+        'pessoa_id' => [
+            'required',
+            'exists:pessoas,id'
+        ],
 
-            'pessoa_id' => [
-                'required',
-                'exists:pessoas,id'
-            ],
+        'instituicao_id' => [
+            'required',
+            'exists:instituicoes,id'
+        ],
 
-            'instituicao_id' => [
-                'required',
-                'exists:instituicoes,id'
-            ],
+        'nome' => [
+            'required',
+            'string',
+            'max:255'
+        ],
 
-            'nome' => [
-                'required',
-                'string',
-                'max:255'
-            ],
+        'descricao' => [
+            'nullable',
+            'string'
+        ],
 
-            'descricao' => [
-                'nullable',
-                'string'
-            ],
+        'localizacao' => [
+            'nullable',
+            'string'
+        ],
 
-            'localizacao' => [
-                'nullable',
-                'string'
-            ],
+        'latitude' => [
+            'nullable',
+            'numeric',
+            'between:-90,90'
+        ],
 
-            'latitude' => [
-                'nullable',
-                'numeric',
-                'between:-90,90'
-            ],
+        'longitude' => [
+            'nullable',
+            'numeric',
+            'between:-180,180'
+        ],
 
-            'longitude' => [
-                'nullable',
-                'numeric',
-                'between:-180,180'
-            ],
+        'estado' => [
+            'required',
+            'in:Ativo,Transferido,Inativo'
+        ],
 
-            'estado' => [
-                'required',
-                'in:Ativo,Transferido,Inativo'
-            ],
+    ]);
 
-        ]);
 
-        Patrimonio::create($validated);
+    /*
+    |--------------------------------------------------------------------------
+    | Determinar o prefixo do código
+    |--------------------------------------------------------------------------
+    */
 
-        return redirect()
-            ->route('patrimonios.index')
-            ->with(
-                'success',
-                'Património cadastrado com sucesso.'
-            );
+    $tipo = TipoPatrimonio::findOrFail(
+        $validated['tipo_patrimonio_id']
+    );
+
+    $prefixos = [
+        'Casa' => 'CAS',
+        'Terreno' => 'TER',
+        'Viatura' => 'VIA',
+        'Veículo' => 'VEI',
+        'Outro' => 'OUT',
+    ];
+
+    $prefixo = $prefixos[$tipo->nome] ?? 'OUT';
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Gerar próximo código do património
+    |--------------------------------------------------------------------------
+    */
+
+    $ultimoCodigo = Patrimonio::where(
+        'codigo',
+        'like',
+        'SNRP-' . $prefixo . '-%'
+    )
+    ->orderByDesc('id')
+    ->value('codigo');
+
+
+    if ($ultimoCodigo) {
+
+        $numero = (int) substr($ultimoCodigo, -6);
+
+        $novoNumero = $numero + 1;
+
+    } else {
+
+        $novoNumero = 1;
+
     }
+
+
+    $validated['codigo'] =
+        'SNRP-' . $prefixo . '-' .
+        str_pad(
+            $novoNumero,
+            6,
+            '0',
+            STR_PAD_LEFT
+        );
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Criar património
+    |--------------------------------------------------------------------------
+    */
+
+    Patrimonio::create($validated);
+
+
+    return redirect()
+        ->route('patrimonios.index')
+        ->with(
+            'success',
+            'Património cadastrado com sucesso. Código: '
+            . $validated['codigo']
+        );
+}
 
 
     /**

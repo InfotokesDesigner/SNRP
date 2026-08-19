@@ -58,27 +58,6 @@
             </div>
 
 
-            {{-- QR Code --}}
-            <div class="col-md-4 text-center">
-
-                <label class="form-label text-muted d-block">
-                    QR Code
-                </label>
-
-                <div class="border rounded p-3 bg-white d-inline-block">
-
-                    {!! $qrCode !!}
-
-                </div>
-
-                <small class="text-muted d-block mt-2">
-                    Aponte a câmera do telemóvel para consultar
-                    este património.
-                </small>
-
-            </div>
-
-
             {{-- Estado --}}
             <div class="col-md-4">
 
@@ -332,5 +311,35 @@
     </div>
 
 </div>
+{{-- QR Code --}}
+<div class="col-md-12 mt-4">
 
+    <div class="card border">
+
+        <div class="card-header">
+            <h5 class="mb-0">
+                <i class="bi bi-qr-code me-1"></i>
+                QR Code do Património
+            </h5>
+        </div>
+
+        <div class="card-body text-center">
+
+            <div class="mb-3">
+                {!! $qrCode !!}
+            </div>
+
+            <p class="text-muted mb-2">
+                Aponte a câmara do telemóvel para consultar este património.
+            </p>
+
+            <small class="text-muted">
+                Código: <strong>{{ $patrimonio->codigo }}</strong>
+            </small>
+
+        </div>
+
+    </div>
+
+</div>
 @endsection

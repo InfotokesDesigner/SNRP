@@ -50,53 +50,101 @@ class PessoaController extends Controller
     /**
      * Guarda uma nova pessoa.
      */
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
+  public function store(Request $request)
+{
+    $validated = $request->validate([
 
-            'nome_completo' => 'required|string|max:255',
+        'nome_completo' => 'required|string|max:255',
 
-            'bi' => 'nullable|string|max:30|unique:pessoas,bi',
+        'bi' => 'nullable|string|max:30|unique:pessoas,bi',
 
-            'nif' => 'nullable|string|max:30|unique:pessoas,nif',
+        'nif' => 'nullable|string|max:30|unique:pessoas,nif',
 
-            'data_nascimento' => 'nullable|date',
+        'data_nascimento' => 'nullable|date',
 
-            'sexo' => 'nullable|in:Masculino,Feminino',
+        'sexo' => 'nullable|in:Masculino,Feminino',
 
-            'telefone' => 'nullable|string|max:30',
+        'telefone' => 'nullable|string|max:30',
 
-            'email' => 'nullable|email|max:255',
+        'email' => 'nullable|email|max:255',
 
-            'morada' => 'nullable|string',
+        'morada' => 'nullable|string',
 
-            'fotografia' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        'fotografia' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
 
-            'ativo' => 'nullable|boolean',
+        'ativo' => 'nullable|boolean',
 
-        ]);
-
-
-        // Estado
-        $validated['ativo'] = $request->boolean('ativo');
+    ]);
 
 
-        // Upload da fotografia
-        if ($request->hasFile('fotografia')) {
+    /*
+    |--------------------------------------------------------------------------
+    | Geração automática do código do cidadão
+    |--------------------------------------------------------------------------
+    */
 
-            $validated['fotografia'] =
-                $request->file('fotografia')
-                    ->store('pessoas', 'public');
-        }
+    $ultimoCodigo = Pessoa::whereNotNull('codigo_cidadao')
+        ->orderByDesc('id')
+        ->value('codigo_cidadao');
 
 
-        Pessoa::create($validated);
+    if ($ultimoCodigo) {
 
+        $numero = (int) substr($ultimoCodigo, -6);
 
-        return redirect()
-            ->route('pessoas.index')
-            ->with('success', 'Pessoa cadastrada com sucesso.');
+        $novoNumero = $numero + 1;
+
+    } else {
+
+        $novoNumero = 1;
+
     }
+
+
+    $validated['codigo_cidadao'] =
+        'SNRP-PES-' . str_pad(
+            $novoNumero,
+            6,
+            '0',
+            STR_PAD_LEFT
+        );
+
+
+    // Estado
+    $validated['ativo'] = $request->boolean('ativo');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Upload da fotografia
+    |--------------------------------------------------------------------------
+    */
+
+    if ($request->hasFile('fotografia')) {
+
+        $validated['fotografia'] =
+            $request->file('fotografia')
+                ->store('pessoas', 'public');
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Criar pessoa
+    |--------------------------------------------------------------------------
+    */
+
+    Pessoa::create($validated);
+
+
+    return redirect()
+        ->route('pessoas.index')
+        ->with(
+            'success',
+            'Pessoa cadastrada com sucesso. Código: '
+            . $validated['codigo_cidadao']
+        );
+}
 
 
     /**
