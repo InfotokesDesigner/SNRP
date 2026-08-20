@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Patrimonio extends Model
 {
@@ -39,5 +40,14 @@ class Patrimonio extends Model
     public function instituicao(): BelongsTo
     {
         return $this->belongsTo(Instituicao::class);
+    }
+
+
+    /**
+     * Histórico de transferências deste património.
+     */
+    public function transferencias(): HasMany
+    {
+        return $this->hasMany(TransferenciaPatrimonial::class);
     }
 }

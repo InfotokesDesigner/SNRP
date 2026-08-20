@@ -5,6 +5,7 @@ use App\Http\Controllers\InstituicaoController;
 use App\Http\Controllers\PessoaController;
 use App\Http\Controllers\TipoPatrimonioController;
 use App\Http\Controllers\PatrimonioController;
+use App\Http\Controllers\TransferenciaPatrimonialController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -109,6 +110,24 @@ Route::middleware('auth')->group(function () {
         'patrimonios',
         PatrimonioController::class
     );
+
+    /*
+|--------------------------------------------------------------------------
+| Transferências Patrimoniais
+|--------------------------------------------------------------------------
+*/
+
+Route::resource(
+    'transferencias-patrimoniais',
+    TransferenciaPatrimonialController::class
+)->parameters([
+    'transferencias-patrimoniais' => 'transferencia'
+])->only([
+    'index',
+    'create',
+    'store',
+    'show'
+]);
 
 });
 /*

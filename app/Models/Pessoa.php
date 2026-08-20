@@ -34,5 +34,29 @@ class Pessoa extends Model
     {
         return $this->hasMany(Patrimonio::class);
     }
-    
+
+
+    /**
+     * Transferências em que a pessoa era o proprietário anterior.
+     */
+    public function transferenciasComoAnterior(): HasMany
+    {
+        return $this->hasMany(
+            TransferenciaPatrimonial::class,
+            'proprietario_anterior_id'
+        );
+    }
+
+
+    /**
+     * Transferências em que a pessoa passou a ser o novo proprietário.
+     */
+    public function transferenciasComoNovo(): HasMany
+    {
+        return $this->hasMany(
+            TransferenciaPatrimonial::class,
+            'novo_proprietario_id'
+        );
+    }
+
 }
