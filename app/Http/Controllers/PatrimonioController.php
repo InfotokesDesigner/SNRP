@@ -218,10 +218,13 @@ public function store(Request $request)
     public function show(Patrimonio $patrimonio)
 {
     $patrimonio->load([
-        'tipoPatrimonio',
-        'pessoa',
-        'instituicao'
-    ]);
+    'tipoPatrimonio',
+    'pessoa',
+    'instituicao',
+    'transferencias.proprietarioAnterior',
+    'transferencias.novoProprietario',
+    'fotografias',
+]);
 
     $qrCode = QrCode::size(180)
         ->margin(1)

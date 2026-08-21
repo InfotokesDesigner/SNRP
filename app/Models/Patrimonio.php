@@ -50,4 +50,11 @@ class Patrimonio extends Model
     {
         return $this->hasMany(TransferenciaPatrimonial::class);
     }
+    /**
+ * Fotografias deste património.
+ */
+   public function fotografias(): HasMany
+    {
+    return $this->hasMany(FotografiaPatrimonio::class);
+    }
 }

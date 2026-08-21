@@ -311,6 +311,169 @@
     </div>
 
 </div>
+{{-- Histórico de Transferências --}}
+<div class="card mt-4">
+
+    <div class="card-header">
+
+        <h5 class="mb-0">
+            <i class="bi bi-clock-history me-1"></i>
+            Histórico de Proprietários
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        @if($patrimonio->transferencias->count() > 0)
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>Data</th>
+
+                            <th>Proprietário anterior</th>
+
+                            <th>Novo proprietário</th>
+
+                            <th>Observação</th>
+
+                            <th class="text-center">Ação</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach($patrimonio->transferencias->sortByDesc('data_transferencia') as $transferencia)
+
+                            <tr>
+
+                                {{-- Data --}}
+                                <td>
+
+                                    {{ $transferencia->data_transferencia
+                                        ? $transferencia->data_transferencia->format('d/m/Y')
+                                        : '—'
+                                    }}
+
+                                </td>
+
+
+                                {{-- Proprietário anterior --}}
+                                <td>
+
+                                    <strong>
+                                        {{ $transferencia->proprietarioAnterior->nome_completo ?? '—' }}
+                                    </strong>
+
+                                    @if($transferencia->proprietarioAnterior?->codigo_cidadao)
+
+                                        <br>
+
+                                        <small class="text-muted">
+
+                                            {{ $transferencia->proprietarioAnterior->codigo_cidadao }}
+
+                                        </small>
+
+                                    @endif
+
+                                </td>
+
+
+                                {{-- Novo proprietário --}}
+                                <td>
+
+                                    <strong>
+                                        {{ $transferencia->novoProprietario->nome_completo ?? '—' }}
+                                    </strong>
+
+                                    @if($transferencia->novoProprietario?->codigo_cidadao)
+
+                                        <br>
+
+                                        <small class="text-muted">
+
+                                            {{ $transferencia->novoProprietario->codigo_cidadao }}
+
+                                        </small>
+
+                                    @endif
+
+                                </td>
+
+
+                                {{-- Observação --}}
+                                <td>
+
+                                    @if($transferencia->observacao)
+
+                                        {{ $transferencia->observacao }}
+
+                                    @else
+
+                                        <span class="text-muted">
+                                            Sem observação
+                                        </span>
+
+                                    @endif
+
+                                </td>
+
+
+                                {{-- Ação --}}
+                                <td class="text-center">
+
+                                    <a href="{{ route(
+                                        'transferencias-patrimoniais.show',
+                                        $transferencia
+                                    ) }}"
+                                       class="btn btn-sm btn-primary">
+
+                                        <i class="bi bi-eye me-1"></i>
+                                        Ver
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                        @endforeach
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        @else
+
+            <div class="text-center text-muted py-4">
+
+                <i class="bi bi-clock-history fs-1 d-block mb-2"></i>
+
+                <p class="mb-0">
+                    Este património ainda não possui transferências registadas.
+                </p>
+
+            </div>
+
+        @endif
+
+    </div>
+
+</div>
+
+
+
 {{-- QR Code --}}
 <div class="col-md-12 mt-4">
 
@@ -338,6 +501,202 @@
             </small>
 
         </div>
+
+    </div>
+
+</div>
+
+{{-- Fotografias do Património --}}
+<div class="card mt-4">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <h5 class="mb-0">
+            <i class="bi bi-images me-1"></i>
+            Fotografias do Património
+        </h5>
+
+        <span class="badge text-bg-secondary">
+            {{ $patrimonio->fotografias->count() }}
+        </span>
+
+    </div>
+
+    <div class="card-body">
+
+        {{-- Formulário de upload --}}
+        <form action="{{ route('patrimonios.fotografias.store', $patrimonio) }}"
+              method="POST"
+              enctype="multipart/form-data">
+
+            @csrf
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+
+                    <label for="fotografia" class="form-label">
+                        Fotografia
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    <input type="file"
+                           name="fotografia"
+                           id="fotografia"
+                           class="form-control @error('fotografia') is-invalid @enderror"
+                           accept="image/jpeg,image/png,image/webp"
+                           required>
+
+                    @error('fotografia')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                    <small class="text-muted">
+                        JPG, PNG ou WEBP — máximo 5 MB.
+                    </small>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <label for="descricao" class="form-label">
+                        Descrição
+                    </label>
+
+                    <input type="text"
+                           name="descricao"
+                           id="descricao"
+                           class="form-control"
+                           placeholder="Ex.: Fachada principal">
+
+                </div>
+
+
+                <div class="col-md-2 d-flex align-items-end">
+
+                    <div class="form-check mb-2">
+
+                        <input type="checkbox"
+                               name="principal"
+                               value="1"
+                               id="principal"
+                               class="form-check-input">
+
+                        <label for="principal"
+                               class="form-check-label">
+
+                            Fotografia principal
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="mt-3">
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    <i class="bi bi-upload me-1"></i>
+                    Adicionar fotografia
+
+                </button>
+
+            </div>
+
+        </form>
+
+
+        {{-- Galeria --}}
+        @if($patrimonio->fotografias->count())
+
+            <hr class="my-4">
+
+            <div class="row g-4">
+
+                @foreach($patrimonio->fotografias as $fotografia)
+
+                    <div class="col-md-4 col-lg-3">
+
+                        <div class="card h-100">
+
+                            <img src="{{ asset('storage/' . $fotografia->caminho) }}"
+                                 class="card-img-top"
+                                 alt="{{ $fotografia->descricao ?? 'Fotografia do património' }}"
+                                 style="height: 200px; object-fit: cover;">
+
+                            <div class="card-body">
+
+                                @if($fotografia->principal)
+
+                                    <span class="badge text-bg-primary mb-2">
+                                        <i class="bi bi-star-fill me-1"></i>
+                                        Principal
+                                    </span>
+
+                                @endif
+
+                                @if($fotografia->descricao)
+
+                                    <p class="mb-2">
+                                        {{ $fotografia->descricao }}
+                                    </p>
+
+                                @endif
+
+                                <small class="text-muted d-block mb-3">
+                                    {{ $fotografia->created_at?->format('d/m/Y H:i') }}
+                                </small>
+
+
+                                <form action="{{ route(
+                                    'patrimonios.fotografias.destroy',
+                                    [$patrimonio, $fotografia]
+                                ) }}"
+                                method="POST"
+                                onsubmit="return confirm('Tem certeza que deseja eliminar esta fotografia?');">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit"
+                                            class="btn btn-sm btn-outline-danger">
+
+                                        <i class="bi bi-trash me-1"></i>
+                                        Eliminar
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                @endforeach
+
+            </div>
+
+        @else
+
+            <div class="alert alert-light border mt-4 mb-0">
+
+                <i class="bi bi-info-circle me-1"></i>
+
+                Ainda não existem fotografias registadas para este património.
+
+            </div>
+
+        @endif
 
     </div>
 

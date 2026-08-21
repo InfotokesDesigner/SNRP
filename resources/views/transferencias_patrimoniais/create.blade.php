@@ -82,8 +82,10 @@
                                     {{ $patrimonio->nome }}
 
                                     @if($patrimonio->pessoa)
+
                                         — Proprietário:
                                         {{ $patrimonio->pessoa->nome_completo }}
+
                                     @endif
 
                                 </option>
@@ -151,7 +153,9 @@
                                     {{ $pessoa->nome_completo }}
 
                                     @if($pessoa->codigo_cidadao)
+
                                         — {{ $pessoa->codigo_cidadao }}
+
                                     @endif
 
                                 </option>
@@ -258,7 +262,10 @@
 </div>
 
 
-{{-- Atualiza automaticamente o proprietário atual --}}
+{{-- ========================================================= --}}
+{{-- JavaScript da transferência --}}
+{{-- ========================================================= --}}
+
 <script>
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -269,40 +276,168 @@ document.addEventListener('DOMContentLoaded', function () {
     const proprietarioAtual =
         document.getElementById('proprietario_atual');
 
+    const novoProprietarioSelect =
+        document.getElementById('novo_proprietario_id');
+
     const pessoas = @json(
         $pessoas->pluck('nome_completo', 'id')
     );
 
-    patrimonioSelect.addEventListener('change', function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Atualizar formulário
+    |--------------------------------------------------------------------------
+    */
+
+    function atualizarFormulario() {
 
         const selectedOption =
-            this.options[this.selectedIndex];
+            patrimonioSelect.options[patrimonioSelect.selectedIndex];
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Nenhum património selecionado
+        |--------------------------------------------------------------------------
+        */
+
+        if (!selectedOption || !selectedOption.value) {
+
+            proprietarioAtual.value = '';
+
+            proprietarioAtual.placeholder =
+                'Selecione primeiro o património';
+
+
+            /*
+            | Mostrar novamente todas as pessoas
+            */
+
+            Array.from(
+                novoProprietarioSelect.options
+            ).forEach(function (option) {
+
+                option.hidden = false;
+
+            });
+
+            return;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Obter proprietário atual
+        |--------------------------------------------------------------------------
+        */
 
         const proprietarioId =
             selectedOption.dataset.proprietario;
 
-        if (proprietarioId && pessoas[proprietarioId]) {
+
+        /*
+        |--------------------------------------------------------------------------
+        | Mostrar proprietário atual
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            proprietarioId &&
+            pessoas[proprietarioId]
+        ) {
 
             proprietarioAtual.value =
                 pessoas[proprietarioId];
+
+            proprietarioAtual.placeholder = '';
 
         } else {
 
             proprietarioAtual.value =
                 'Sem proprietário definido';
 
+            proprietarioAtual.placeholder = '';
+
         }
 
-    });
 
-    // Executa automaticamente se houver valor antigo
-    if (patrimonioSelect.value) {
+        /*
+        |--------------------------------------------------------------------------
+        | Ocultar proprietário atual da lista
+        |--------------------------------------------------------------------------
+        */
 
-        patrimonioSelect.dispatchEvent(
-            new Event('change')
-        );
+        Array.from(
+            novoProprietarioSelect.options
+        ).forEach(function (option) {
+
+            /*
+            | Não alterar a opção inicial
+            */
+
+            if (!option.value) {
+
+                option.hidden = false;
+
+                return;
+
+            }
+
+
+            /*
+            | Ocultar proprietário atual
+            */
+
+            if (
+                option.value ===
+                proprietarioId
+            ) {
+
+                option.hidden = true;
+
+
+                /*
+                | Se estava selecionado,
+                | limpar a seleção
+                */
+
+                if (option.selected) {
+
+                    novoProprietarioSelect.value = '';
+
+                }
+
+            } else {
+
+                option.hidden = false;
+
+            }
+
+        });
 
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Quando o património for alterado
+    |--------------------------------------------------------------------------
+    */
+
+    patrimonioSelect.addEventListener(
+        'change',
+        atualizarFormulario
+    );
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Executar ao carregar a página
+    |--------------------------------------------------------------------------
+    */
+
+    atualizarFormulario();
 
 });
 

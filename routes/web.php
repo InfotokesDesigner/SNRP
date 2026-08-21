@@ -6,6 +6,7 @@ use App\Http\Controllers\PessoaController;
 use App\Http\Controllers\TipoPatrimonioController;
 use App\Http\Controllers\PatrimonioController;
 use App\Http\Controllers\TransferenciaPatrimonialController;
+use App\Http\Controllers\FotografiaPatrimonioController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -128,6 +129,21 @@ Route::resource(
     'store',
     'show'
 ]);
+/*
+|--------------------------------------------------------------------------
+| Fotografias dos Patrimónios
+|--------------------------------------------------------------------------
+*/
+
+Route::post(
+    '/patrimonios/{patrimonio}/fotografias',
+    [FotografiaPatrimonioController::class, 'store']
+)->name('patrimonios.fotografias.store');
+
+Route::delete(
+    '/patrimonios/{patrimonio}/fotografias/{fotografia}',
+    [FotografiaPatrimonioController::class, 'destroy']
+)->name('patrimonios.fotografias.destroy');
 
 });
 /*
@@ -140,6 +156,8 @@ Route::get(
     '/consulta-patrimonio/{codigo}',
     [PatrimonioController::class, 'consultaPublica']
 )->name('patrimonios.consulta');
+
+
 
 /*
 |--------------------------------------------------------------------------
