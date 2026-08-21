@@ -506,9 +506,188 @@
 
 </div>
 
+{{-- Fotografias do Património --}}
+<div class="card mt-4">
 
-        
+    <div class="card-header d-flex justify-content-between align-items-center">
 
+        <h5 class="mb-0">
+            <i class="bi bi-images me-1"></i>
+            Fotografias do Património
+        </h5>
+
+        <span class="badge text-bg-secondary">
+            {{ $patrimonio->fotografias->count() }}
+        </span>
+
+    </div>
+
+    <div class="card-body">
+
+        {{-- Formulário de upload --}}
+        <form action="{{ route('patrimonios.fotografias.store', $patrimonio) }}"
+              method="POST"
+              enctype="multipart/form-data">
+
+            @csrf
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+
+                    <label for="fotografia" class="form-label">
+                        Fotografia
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    <input type="file"
+                           name="fotografia"
+                           id="fotografia"
+                           class="form-control @error('fotografia') is-invalid @enderror"
+                           accept="image/jpeg,image/png,image/webp"
+                           required>
+
+                    @error('fotografia')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                    <small class="text-muted">
+                        JPG, PNG ou WEBP — máximo 5 MB.
+                    </small>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <label for="descricao" class="form-label">
+                        Descrição
+                    </label>
+
+                    <input type="text"
+                           name="descricao"
+                           id="descricao"
+                           class="form-control"
+                           placeholder="Ex.: Fachada principal">
+
+                </div>
+
+
+                <div class="col-md-2 d-flex align-items-end">
+
+                    <div class="form-check mb-2">
+
+                        <input type="checkbox"
+                               name="principal"
+                               value="1"
+                               id="principal"
+                               class="form-check-input">
+
+                        <label for="principal"
+                               class="form-check-label">
+
+                            Fotografia principal
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="mt-3">
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    <i class="bi bi-upload me-1"></i>
+                    Adicionar fotografia
+
+                </button>
+
+            </div>
+
+        </form>
+
+
+        {{-- Galeria --}}
+@if($patrimonio->fotografias->count())
+
+    @php
+        $fotografiaPrincipal = $patrimonio->fotografias
+            ->firstWhere('principal', true);
+
+        $outrasFotografias = $patrimonio->fotografias
+            ->filter(fn ($fotografia) => !$fotografia->principal);
+    @endphp
+
+
+    {{-- Fotografia Principal --}}
+    @if($fotografiaPrincipal)
+
+        <div class="mb-5">
+
+            <div class="d-flex align-items-center mb-3">
+
+                <h5 class="mb-0">
+
+                    <i class="bi bi-star-fill text-warning me-2"></i>
+
+                    Fotografia Principal
+
+                </h5>
+
+            </div>
+
+
+            <div class="card border-0 shadow-sm overflow-hidden">
+
+                <div class="position-relative">
+
+                    <img src="{{ asset('storage/' . $fotografiaPrincipal->caminho) }}"
+                         class="img-fluid w-100"
+                         alt="{{ $fotografiaPrincipal->descricao ?? 'Fotografia principal do património' }}"
+                         style="height: 450px; object-fit: cover;">
+
+                    <span class="position-absolute top-0 start-0 m-3 badge text-bg-primary fs-6">
+
+                        <i class="bi bi-star-fill me-1"></i>
+
+                        Principal
+
+                    </span>
+
+                </div>
+
+
+                <div class="card-body">
+
+                    @if($fotografiaPrincipal->descricao)
+
+                        <h6 class="mb-1">
+                            {{ $fotografiaPrincipal->descricao }}
+                        </h6>
+
+                    @endif
+
+                    <small class="text-muted">
+
+                        Adicionada em
+                        {{ $fotografiaPrincipal->created_at?->format('d/m/Y H:i') }}
+
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    @endif
 
 
    {{-- Fotografias do Património --}}

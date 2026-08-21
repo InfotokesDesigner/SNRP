@@ -145,6 +145,11 @@ Route::delete(
     [FotografiaPatrimonioController::class, 'destroy']
 )->name('patrimonios.fotografias.destroy');
 
+Route::patch(
+    'patrimonios/{patrimonio}/fotografias/{fotografia}/principal',
+    [FotografiaPatrimonioController::class, 'principal']
+)->name('patrimonios.fotografias.principal');
+
 });
 /*
 |--------------------------------------------------------------------------
