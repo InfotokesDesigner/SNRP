@@ -30,6 +30,8 @@ class InstituicaoController extends Controller
      */
     public function store(Request $request)
     {
+    
+        
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
             'sigla' => 'required|string|max:50',
