@@ -1,212 +1,395 @@
-@extends('layouts.snrp.app')
+@extends('layouts.snrp.public')
 
-@section('title', 'Consulta de Património - SNRP')
-
-@section('page-title', 'Consulta de Património')
+@section('title', 'Consulta Pública de Património - SNRP')
 
 @section('content')
 
-<div class="container py-4">
+<div class="mb-4">
 
-    <div class="card shadow-sm">
+    <div class="text-center">
 
-        <div class="card-header text-center">
-
-            <h3 class="mb-1">
-                <i class="bi bi-qr-code me-2"></i>
-                Consulta de Património
-            </h3>
-
-            <small class="text-muted">
-                Sistema de Registo Patrimonial - SNRP
-            </small>
-
+        <div class="mb-2">
+            <span class="badge text-bg-primary px-3 py-2">
+                <i class="bi bi-qr-code me-1"></i>
+                Consulta Pública
+            </span>
         </div>
 
-        <div class="card-body">
+        <h1 class="fw-bold mb-1">
+            Consulta de Património
+        </h1>
 
-            <div class="text-center mb-4">
+        <p class="text-muted mb-0">
+            Informação disponibilizada pelo Sistema de Registo Patrimonial
+        </p>
 
-                <span class="badge text-bg-success fs-6">
-                    Património encontrado
+    </div>
+
+</div>
+
+
+{{-- Património --}}
+<div class="card border-0 shadow-sm overflow-hidden">
+
+    {{-- Cabeçalho --}}
+    <div class="card-header bg-white p-4">
+
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+            <div>
+
+                <small class="text-muted d-block mb-1">
+                    Código do Património
+                </small>
+
+                <span class="badge text-bg-primary fs-6">
+                    {{ $patrimonio->codigo }}
                 </span>
 
             </div>
 
 
-            <div class="row g-4">
+            <div>
 
-                {{-- Código --}}
-                <div class="col-md-6">
+                @if($patrimonio->estado === 'Ativo')
 
-                    <label class="form-label text-muted">
-                        Código do Património
-                    </label>
+                    <span class="badge text-bg-success fs-6 px-3 py-2">
+                        <i class="bi bi-check-circle me-1"></i>
+                        Ativo
+                    </span>
 
-                    <div class="fw-bold fs-5">
-                        {{ $patrimonio->codigo }}
-                    </div>
+                @elseif($patrimonio->estado === 'Transferido')
 
-                </div>
+                    <span class="badge text-bg-warning fs-6 px-3 py-2">
+                        <i class="bi bi-arrow-left-right me-1"></i>
+                        Transferido
+                    </span>
 
+                @else
 
-                {{-- Estado --}}
-                <div class="col-md-6">
-
-                    <label class="form-label text-muted">
-                        Estado
-                    </label>
-
-                    <div>
-
-                        @if($patrimonio->estado === 'Ativo')
-
-                            <span class="badge text-bg-success">
-                                Ativo
-                            </span>
-
-                        @elseif($patrimonio->estado === 'Transferido')
-
-                            <span class="badge text-bg-warning">
-                                Transferido
-                            </span>
-
-                        @else
-
-                            <span class="badge text-bg-secondary">
-                                Inativo
-                            </span>
-
-                        @endif
-
-                    </div>
-
-                </div>
-
-
-                {{-- Nome --}}
-                <div class="col-md-12">
-
-                    <label class="form-label text-muted">
-                        Património
-                    </label>
-
-                    <div class="fs-4 fw-bold">
-                        {{ $patrimonio->nome }}
-                    </div>
-
-                </div>
-
-
-                {{-- Tipo --}}
-                <div class="col-md-6">
-
-                    <label class="form-label text-muted">
-                        Tipo de Património
-                    </label>
-
-                    <div>
-                        {{ $patrimonio->tipoPatrimonio->nome ?? 'Não informado' }}
-                    </div>
-
-                </div>
-
-
-                {{-- Instituição --}}
-                <div class="col-md-6">
-
-                    <label class="form-label text-muted">
-                        Instituição responsável
-                    </label>
-
-                    <div>
-                        {{ $patrimonio->instituicao->nome ?? 'Não informado' }}
-                    </div>
-
-                </div>
-
-
-                {{-- Localização --}}
-                <div class="col-md-12">
-
-                    <label class="form-label text-muted">
-                        Localização
-                    </label>
-
-                    <div>
-
-                        @if($patrimonio->localizacao)
-
-                            <i class="bi bi-geo-alt me-1"></i>
-
-                            {{ $patrimonio->localizacao }}
-
-                        @else
-
-                            <span class="text-muted">
-                                Não informada
-                            </span>
-
-                        @endif
-
-                    </div>
-
-                </div>
-
-
-                {{-- Coordenadas --}}
-                @if($patrimonio->latitude && $patrimonio->longitude)
-
-                    <div class="col-md-6">
-
-                        <label class="form-label text-muted">
-                            Latitude
-                        </label>
-
-                        <div>
-                            {{ $patrimonio->latitude }}
-                        </div>
-
-                    </div>
-
-
-                    <div class="col-md-6">
-
-                        <label class="form-label text-muted">
-                            Longitude
-                        </label>
-
-                        <div>
-                            {{ $patrimonio->longitude }}
-                        </div>
-
-                    </div>
+                    <span class="badge text-bg-secondary fs-6 px-3 py-2">
+                        <i class="bi bi-dash-circle me-1"></i>
+                        Inativo
+                    </span>
 
                 @endif
 
+            </div>
 
-                {{-- Descrição --}}
-                <div class="col-md-12">
+        </div>
 
-                    <label class="form-label text-muted">
-                        Descrição
-                    </label>
+    </div>
 
-                    <div class="border rounded p-3 bg-light">
 
-                        @if($patrimonio->descricao)
+    <div class="card-body p-4">
 
-                            {!! nl2br(e($patrimonio->descricao)) !!}
+        <div class="row g-4">
 
-                        @else
+            {{-- Fotografia principal --}}
+            @php
+                $fotografiaPrincipal = $patrimonio->fotografias
+                    ->firstWhere('principal', true);
+            @endphp
 
-                            <span class="text-muted">
-                                Nenhuma descrição informada.
-                            </span>
+            @if($fotografiaPrincipal)
 
-                        @endif
+                <div class="col-12">
+
+                    <div class="rounded overflow-hidden shadow-sm">
+
+                        <img
+                            src="{{ asset('storage/' . $fotografiaPrincipal->caminho) }}"
+                            class="patrimonio-photo"
+                            alt="{{ $fotografiaPrincipal->descricao ?? 'Fotografia do património' }}"
+                        >
 
                     </div>
+
+                    @if($fotografiaPrincipal->descricao)
+
+                        <div class="text-muted small mt-2">
+                            <i class="bi bi-camera me-1"></i>
+                            {{ $fotografiaPrincipal->descricao }}
+                        </div>
+
+                    @endif
+
+                </div>
+
+            @endif
+
+            {{-- Outras fotografias --}}
+@php
+    $outrasFotografias = $patrimonio->fotografias
+        ->filter(fn ($fotografia) => !$fotografia->principal);
+@endphp
+
+@if($outrasFotografias->count() > 0)
+
+    <div class="col-12">
+
+        <div class="border rounded p-3">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <h5 class="mb-0">
+                    <i class="bi bi-images me-1"></i>
+                    Outras Fotografias
+                </h5>
+
+                <span class="badge text-bg-secondary">
+                    {{ $outrasFotografias->count() }}
+                </span>
+
+            </div>
+
+            <div class="row g-3">
+
+                @foreach($outrasFotografias as $fotografia)
+
+                    <div class="col-6 col-md-4 col-lg-3">
+
+                        <div class="card h-100 shadow-sm">
+
+                            <img
+                                src="{{ asset('storage/' . $fotografia->caminho) }}"
+                                class="card-img-top"
+                                alt="{{ $fotografia->descricao ?? 'Fotografia do património' }}"
+                                style="height: 180px; object-fit: cover;"
+                            >
+
+                            @if($fotografia->descricao)
+
+                                <div class="card-body p-2">
+
+                                    <small class="text-muted">
+                                        <i class="bi bi-camera me-1"></i>
+                                        {{ $fotografia->descricao }}
+                                    </small>
+
+                                </div>
+
+                            @endif
+
+                        </div>
+
+                    </div>
+
+                @endforeach
+
+            </div>
+
+        </div>
+
+    </div>
+
+@endif
+
+            {{-- Nome --}}
+            <div class="col-12">
+
+                <small class="text-muted d-block mb-1">
+                    Património
+                </small>
+
+                <h2 class="fw-bold mb-0">
+                    {{ $patrimonio->nome }}
+                </h2>
+
+            </div>
+
+
+            {{-- Tipo --}}
+            <div class="col-md-6">
+
+                <div class="border rounded p-3 h-100">
+
+                    <small class="text-muted d-block mb-1">
+                        <i class="bi bi-tag me-1"></i>
+                        Tipo de Património
+                    </small>
+
+                    <strong>
+                        {{ $patrimonio->tipoPatrimonio->nome ?? 'Não informado' }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            {{-- Instituição --}}
+            <div class="col-md-6">
+
+                <div class="border rounded p-3 h-100">
+
+                    <small class="text-muted d-block mb-1">
+                        <i class="bi bi-building me-1"></i>
+                        Instituição responsável
+                    </small>
+
+                    <strong>
+                        {{ $patrimonio->instituicao->nome ?? 'Não informado' }}
+                    </strong>
+
+                    @if($patrimonio->instituicao?->sigla)
+
+                        <div class="small text-muted mt-1">
+                            {{ $patrimonio->instituicao->sigla }}
+                        </div>
+
+                    @endif
+
+                </div>
+
+            </div>
+
+
+            {{-- Localização --}}
+            <div class="col-12">
+
+                <div class="border rounded p-3">
+
+                    <small class="text-muted d-block mb-1">
+                        <i class="bi bi-geo-alt me-1"></i>
+                        Localização
+                    </small>
+
+                    @if($patrimonio->localizacao)
+
+                        <strong>
+                            {{ $patrimonio->localizacao }}
+                        </strong>
+
+                    @else
+
+                        <span class="text-muted">
+                            Não informada
+                        </span>
+
+                    @endif
+
+                </div>
+
+            </div>
+
+
+            {{-- Coordenadas --}}
+            @if($patrimonio->latitude !== null && $patrimonio->longitude !== null)
+
+                <div class="col-md-6">
+
+                    <div class="border rounded p-3">
+
+                        <small class="text-muted d-block mb-1">
+                            Latitude
+                        </small>
+
+                        <strong>
+                            {{ $patrimonio->latitude }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <div class="border rounded p-3">
+
+                        <small class="text-muted d-block mb-1">
+                            Longitude
+                        </small>
+
+                        <strong>
+                            {{ $patrimonio->longitude }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            @endif
+
+            {{-- Mapa de localização --}}
+@if($patrimonio->latitude !== null && $patrimonio->longitude !== null)
+
+    <div class="col-12">
+
+        <div class="border rounded overflow-hidden">
+
+            <div class="p-3 bg-light border-bottom">
+
+                <h5 class="mb-0">
+                    <i class="bi bi-map me-1"></i>
+                    Localização no mapa
+                </h5>
+
+            </div>
+
+            <div
+                id="mapa-patrimonio"
+                style="height: 400px; width: 100%;"
+            ></div>
+
+        </div>
+
+    </div>
+
+@endif
+
+{{-- Mapa de localização --}}
+@if($patrimonio->latitude !== null && $patrimonio->longitude !== null)
+
+    <div class="col-12">
+
+        <div class="border rounded overflow-hidden">
+
+            <div class="p-3 bg-light border-bottom">
+
+                <h5 class="mb-0">
+                    <i class="bi bi-map me-1"></i>
+                    Localização no mapa
+                </h5>
+
+            </div>
+
+            <div
+                id="mapa-patrimonio"
+                style="height: 400px; width: 100%;"
+            ></div>
+
+        </div>
+
+    </div>
+
+@endif
+
+
+            {{-- Descrição --}}
+            <div class="col-12">
+
+                <div class="border rounded p-3 bg-light">
+
+                    <small class="text-muted d-block mb-2">
+                        <i class="bi bi-card-text me-1"></i>
+                        Descrição
+                    </small>
+
+                    @if($patrimonio->descricao)
+
+                        <div>
+                            {!! nl2br(e($patrimonio->descricao)) !!}
+                        </div>
+
+                    @else
+
+                        <span class="text-muted">
+                            Nenhuma descrição informada.
+                        </span>
+
+                    @endif
 
                 </div>
 
@@ -214,20 +397,107 @@
 
         </div>
 
+    </div>
 
-        <div class="card-footer text-center">
 
-            <small class="text-muted">
+    {{-- Rodapé do cartão --}}
+    <div class="card-footer bg-white p-4">
 
-                Consulta pública através do Sistema de Registo Patrimonial
-                (SNRP).
+        <div class="row align-items-center">
 
-            </small>
+            <div class="col-md-8">
+
+                <div class="small text-muted">
+
+                    <i class="bi bi-shield-check me-1"></i>
+
+                    Esta informação foi consultada através do
+                    <strong>Sistema de Registo Patrimonial (SNRP)</strong>.
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+
+                <span class="badge text-bg-success">
+
+                    <i class="bi bi-patch-check me-1"></i>
+
+                    Património registado
+
+                </span>
+
+            </div>
 
         </div>
 
     </div>
 
 </div>
+
+
+
+
+{{-- Aviso de privacidade --}}
+<div class="alert alert-light border mt-4">
+
+    <div class="d-flex">
+
+        <i class="bi bi-info-circle fs-4 me-3 text-primary"></i>
+
+        <div>
+
+            <strong>Consulta pública</strong>
+
+            <p class="mb-0 mt-1 small text-muted">
+
+                Esta consulta apresenta apenas informações patrimoniais
+                disponibilizadas para consulta pública. Dados pessoais
+                não necessários à identificação do património não são
+                apresentados.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+@push('scripts')
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const latitude = {{ $patrimonio->latitude ?? 'null' }};
+        const longitude = {{ $patrimonio->longitude ?? 'null' }};
+
+        if (latitude === null || longitude === null) {
+            return;
+        }
+
+        const mapa = L.map('mapa-patrimonio').setView(
+            [latitude, longitude],
+            16
+        );
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(mapa);
+
+        L.marker([latitude, longitude])
+            .addTo(mapa)
+            .bindPopup(
+                '<strong>{{ $patrimonio->nome }}</strong><br>' +
+                '{{ $patrimonio->localizacao ?? 'Localização do património' }}'
+            )
+            .openPopup();
+
+    });
+</script>
+
+@endpush
 
 @endsection

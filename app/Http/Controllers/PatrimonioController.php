@@ -346,12 +346,15 @@ public function store(Request $request)
 /**
  * Consulta pública de um património através do código.
  */
+/**
+ * Consulta pública de um património através do código.
+ */
 public function consultaPublica(string $codigo)
 {
     $patrimonio = Patrimonio::with([
         'tipoPatrimonio',
         'instituicao',
-        'pessoa'
+        'fotografias',
     ])
     ->where('codigo', $codigo)
     ->firstOrFail();

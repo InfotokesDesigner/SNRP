@@ -11,6 +11,7 @@
 
             <div class="card shadow-sm border-0">
 
+                {{-- CABEÇALHO --}}
                 <div class="card-header bg-primary text-white text-center py-4">
 
                     <div class="mb-2">
@@ -27,6 +28,8 @@
 
                 </div>
 
+
+                {{-- CONTEÚDO --}}
                 <div class="card-body p-4 p-md-5">
 
                     <div class="text-center mb-4">
@@ -42,8 +45,13 @@
 
                     </div>
 
-                   <form method="GET"
-      onsubmit="return consultarPatrimonio(event);">
+
+                    {{-- FORMULÁRIO --}}
+                    <form
+                        method="GET"
+                        id="formConsulta"
+                    >
+
                         <div class="form-group">
 
                             <label for="codigo">
@@ -53,9 +61,11 @@
                             <div class="input-group input-group-lg">
 
                                 <div class="input-group-prepend">
+
                                     <span class="input-group-text">
                                         <i class="fas fa-qrcode"></i>
                                     </span>
+
                                 </div>
 
                                 <input
@@ -77,12 +87,17 @@
 
                         </div>
 
+
+                        {{-- BOTÃO --}}
                         <div class="text-center mt-4">
 
-                            <button type="submit"
-                                    class="btn btn-primary btn-lg px-5">
+                            <button
+                                type="submit"
+                                class="btn btn-primary btn-lg px-5"
+                            >
 
                                 <i class="fas fa-search mr-2"></i>
+
                                 Consultar Património
 
                             </button>
@@ -93,11 +108,15 @@
 
                 </div>
 
+
+                {{-- RODAPÉ --}}
                 <div class="card-footer text-center bg-light">
 
                     <small class="text-muted">
+
                         Consulta pública do Sistema de Registo Patrimonial
                         (SNRP).
+
                     </small>
 
                 </div>
@@ -109,22 +128,34 @@
 
 </div>
 
+
+{{-- REDIRECIONAMENTO PARA A CONSULTA --}}
 <script>
-function consultarPatrimonio(event) {
+
+document.getElementById('formConsulta').addEventListener('submit', function(event) {
+
     event.preventDefault();
 
-    const codigo = document.getElementById('codigo').value.trim();
+    let codigo = document.getElementById('codigo').value.trim();
 
     if (!codigo) {
-        return false;
+        return;
     }
 
-    window.location.href =
-        "{{ url('/consulta-patrimonio') }}/" +
-        encodeURIComponent(codigo);
+    /*
+     * Remove espaços e converte o código para maiúsculas.
+     */
+    codigo = codigo.toUpperCase();
 
-    return false;
-}
+    /*
+     * Redireciona para:
+     *
+     * /consulta-patrimonio/SNRP-CAS-000001
+     */
+    window.location.href = "{{ url('/consulta-patrimonio') }}/" + encodeURIComponent(codigo);
+
+});
+
 </script>
 
 @endsection
