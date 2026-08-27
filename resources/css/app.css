@@ -1,4 +1,2397 @@
 @import 'admin-lte/dist/css/adminlte.min.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* =========================================================
+   SNRP - FOOTER
+   ========================================================= */
+
+.snrp-footer {
+    min-height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 10px 24px;
+
+    /* AZUL INSTITUCIONAL */
+    background: #063b73;
+
+    border-top: 3px solid #0b63b6;
+
+    color: #ffffff;
+
+    font-size: 0.875rem;
+}
+
+
+/* =========================================================
+   COPYRIGHT
+   ========================================================= */
+
+.snrp-footer-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    white-space: nowrap;
+
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.snrp-footer-copyright {
+    color: #ffffff;
+}
+
+.snrp-footer-copyright strong {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   SEPARADORES
+   ========================================================= */
+
+.snrp-footer-separator {
+    color: rgba(255, 255, 255, 0.35);
+
+    font-weight: 400;
+}
+
+
+/* =========================================================
+   DESENVOLVEDOR
+   ========================================================= */
+
+.snrp-footer-developer {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+}
+
+
+/* =========================================================
+   LOGO INFOTOKES
+   ========================================================= */
+
+.snrp-footer-logo {
+    height: 22px;
+
+    width: auto;
+
+    max-width: 70px;
+
+    object-fit: contain;
+
+    display: block;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+/* =========================================================
+   MARCA / DESIGNED BY
+   ========================================================= */
+
+.snrp-footer-brand {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: rgba(255, 255, 255, 0.9);
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.snrp-footer-brand:hover {
+    color: #8dc9ff;
+
+    transform: translateY(-1px);
+}
+
+.snrp-footer-brand:hover .snrp-footer-logo {
+    opacity: 0.9;
+
+    transform: scale(1.04);
+}
+
+
+/* =========================================================
+   NOME DA INFOTOKES
+   ========================================================= */
+
+.snrp-footer-brand strong {
+    color: #ffffff;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   WEBSITE
+   ========================================================= */
+
+.snrp-footer-link {
+    color: #8dc9ff;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.snrp-footer-link:hover {
+    color: #ffffff;
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   IDENTIFICAÇÃO DO SISTEMA
+   ========================================================= */
+
+.snrp-footer-system {
+    color: rgba(255, 255, 255, 0.7);
+
+    white-space: nowrap;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   SNRP - SIDEBAR
+   ========================================================= */
+
+/* Sidebar ocupa toda a altura da janela */
+.app-sidebar {
+    height: 100vh !important;
+    min-height: 100vh !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+
+/* Área do menu ocupa todo o espaço restante */
+.app-sidebar .sidebar-wrapper {
+    flex: 1 1 auto !important;
+
+    min-height: 0 !important;
+
+    height: auto !important;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+}
+
+
+/* Menu */
+.app-sidebar .sidebar-menu {
+    margin-bottom: 0 !important;
+
+    padding-bottom: 10px !important;
+}
+
+
+/* Navegação */
+.app-sidebar nav {
+    margin-bottom: 0 !important;
+}
+
+
+/* Remove espaços extras no final */
+.app-sidebar .sidebar-wrapper > nav {
+    margin-bottom: 0 !important;
+}
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .snrp-footer {
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        padding: 14px 16px;
+
+        text-align: center;
+    }
+
+    .snrp-footer-left,
+    .snrp-footer-developer,
+    .snrp-footer-system {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+    .snrp-footer-system {
+        text-align: center;
+    }
+
+}
+
+
+@media (max-width: 575.98px) {
+
+    .snrp-footer {
+        gap: 12px;
+
+        font-size: 0.8rem;
+    }
+
+    .snrp-footer-logo {
+        height: 20px;
+
+        max-width: 60px;
+    }
+
+    .snrp-footer-left {
+        white-space: normal;
+
+        flex-wrap: wrap;
+    }
+
+    .snrp-footer-developer {
+        flex-wrap: wrap;
+    }
+
+}
+/* =========================================================
+   SNRP - DASHBOARD OPERACIONAL
+   ========================================================= */
+
+.snrp-dashboard {
+    color: #dce9f8;
+}
+
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.snrp-dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+    padding: 18px 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #06152d,
+            #08254b
+        );
+
+    border: 1px solid rgba(45, 126, 220, .35);
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, .25);
+}
+
+.snrp-dashboard-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.snrp-dashboard-title-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        135deg,
+        #0869d9,
+        #0b3e86
+    );
+
+    color: #ffffff;
+
+    font-size: 22px;
+
+    box-shadow:
+        0 0 20px rgba(0, 102, 255, .25);
+}
+
+.snrp-dashboard-title h2 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 1.35rem;
+
+    font-weight: 700;
+}
+
+.snrp-dashboard-title p {
+    margin: 3px 0 0;
+
+    color: #8fa8c7;
+
+    font-size: .82rem;
+}
+
+
+/* UTILIZADOR */
+
+.snrp-dashboard-user {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    color: #ffffff;
+}
+
+.snrp-dashboard-user i {
+    font-size: 30px;
+
+    color: #75b9ff;
+}
+
+.snrp-dashboard-user strong {
+    display: block;
+
+    font-size: .82rem;
+}
+
+.snrp-dashboard-user small {
+    display: block;
+
+    color: #7f9abb;
+
+    font-size: .7rem;
+}
+
+.snrp-online-indicator {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #20c997;
+
+    box-shadow:
+        0 0 8px rgba(32, 201, 151, .8);
+}
+
+
+/* =========================================================
+   INDICADORES
+   ========================================================= */
+
+.snrp-stats-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+
+    margin-bottom: 18px;
+}
+
+.snrp-stat-card {
+    position: relative;
+
+    min-height: 132px;
+
+    padding: 18px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 14px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            #071a35,
+            #09254a
+        );
+
+    border: 1px solid rgba(43, 115, 190, .35);
+
+    border-radius: 9px;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.snrp-stat-card:hover {
+    transform: translateY(-2px);
+
+    border-color: rgba(61, 157, 255, .65);
+
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, .25);
+}
+
+.snrp-stat-icon {
+    width: 44px;
+    height: 44px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    color: #ffffff;
+
+    font-size: 20px;
+}
+
+.snrp-stat-icon.blue {
+    background: #075dcc;
+}
+
+.snrp-stat-icon.cyan {
+    background: #087fbd;
+}
+
+.snrp-stat-icon.green {
+    background: #168a67;
+}
+
+.snrp-stat-icon.orange {
+    background: #b87912;
+}
+
+.snrp-stat-content span {
+    display: block;
+
+    color: #91a9c5;
+
+    font-size: .7rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: .3px;
+}
+
+.snrp-stat-content strong {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #ffffff;
+
+    font-size: 1.65rem;
+
+    line-height: 1.2;
+}
+
+.snrp-stat-content small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #718aa8;
+
+    font-size: .68rem;
+}
+
+.snrp-stat-link {
+    position: absolute;
+
+    right: 15px;
+    bottom: 13px;
+
+    color: #4da6ff;
+
+    font-size: .68rem;
+
+    text-decoration: none;
+}
+
+.snrp-stat-link:hover {
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   GRID PRINCIPAL
+   ========================================================= */
+
+.snrp-dashboard-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 2fr)
+        minmax(280px, 1fr);
+
+    gap: 14px;
+
+    margin-bottom: 14px;
+}
+
+
+/* =========================================================
+   PAINÉIS
+   ========================================================= */
+
+.snrp-panel {
+    background:
+        linear-gradient(
+            145deg,
+            #06162f,
+            #081f40
+        );
+
+    border: 1px solid rgba(42, 112, 187, .35);
+
+    border-radius: 9px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 7px 22px rgba(0, 0, 0, .18);
+}
+
+.snrp-panel-header {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    padding: 17px 18px;
+
+    border-bottom: 1px solid rgba(61, 126, 192, .18);
+}
+
+.snrp-panel-label {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #398fe2;
+
+    font-size: .62rem;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+.snrp-panel-header h3 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: .98rem;
+
+    font-weight: 600;
+}
+
+.snrp-panel-header p {
+    margin: 3px 0 0;
+
+    color: #718baa;
+
+    font-size: .72rem;
+}
+
+.snrp-panel-header-icon {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    color: #4aa7ff;
+
+    background: rgba(0, 103, 204, .14);
+
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   RESUMO
+   ========================================================= */
+
+.snrp-overview-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    padding: 18px;
+
+    gap: 10px;
+}
+
+.snrp-overview-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 13px;
+
+    background: rgba(4, 18, 38, .55);
+
+    border: 1px solid rgba(58, 120, 182, .15);
+
+    border-radius: 7px;
+}
+
+.snrp-overview-icon {
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background: rgba(0, 102, 204, .18);
+
+    color: #4ba8ff;
+}
+
+.snrp-overview-item strong {
+    display: block;
+
+    color: #ffffff;
+
+    font-size: 1.15rem;
+}
+
+.snrp-overview-item span {
+    display: block;
+
+    color: #7892af;
+
+    font-size: .65rem;
+}
+
+
+/* STATUS */
+
+.snrp-system-status {
+    margin: 0 18px 18px;
+
+    padding: 13px;
+
+    border-top: 1px solid rgba(70, 130, 190, .18);
+}
+
+.snrp-status-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 10px;
+
+    color: #8da6c2;
+
+    font-size: .7rem;
+}
+
+.snrp-status-line {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    color: #a0b4ca;
+
+    font-size: .72rem;
+}
+
+.status-online {
+    color: #29d39b;
+
+    font-size: .65rem;
+}
+
+.status-online i {
+    font-size: .45rem;
+
+    margin-right: 4px;
+}
+
+
+/* =========================================================
+   CONSULTA PÚBLICA
+   ========================================================= */
+
+.snrp-public-panel {
+    background:
+        linear-gradient(
+            145deg,
+            #071d3b,
+            #092a53
+        );
+}
+
+.snrp-public-description {
+    padding: 0 18px;
+
+    color: #829ab5;
+
+    font-size: .73rem;
+}
+
+.snrp-public-panel form {
+    padding: 0 18px 15px;
+}
+
+.snrp-public-panel label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #a9bdd4;
+
+    font-size: .7rem;
+}
+
+.snrp-search-box {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 0 10px;
+
+    background: #04152d;
+
+    border: 1px solid rgba(64, 132, 198, .3);
+
+    border-radius: 6px;
+}
+
+.snrp-search-box i {
+    color: #3e9fff;
+}
+
+.snrp-search-box input {
+    width: 100%;
+
+    height: 38px;
+
+    background: transparent;
+
+    border: 0;
+
+    outline: none;
+
+    color: #ffffff;
+
+    font-size: .72rem;
+}
+
+.snrp-search-box input::placeholder {
+    color: #5f7795;
+}
+
+.snrp-primary-button {
+    width: 100%;
+
+    margin-top: 9px;
+
+    padding: 9px;
+
+    border: 0;
+
+    border-radius: 6px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #086de0,
+            #0751b4
+        );
+
+    color: #ffffff;
+
+    font-size: .72rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+.snrp-primary-button:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #1280f2,
+            #0965cf
+        );
+}
+
+.snrp-public-security {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 11px 18px;
+
+    border-top: 1px solid rgba(64, 132, 198, .18);
+
+    color: #6fcaab;
+
+    font-size: .65rem;
+}
+
+.snrp-public-security i {
+    color: #2dd29d;
+}
+
+
+/* =========================================================
+   GRID DE 3
+   ========================================================= */
+
+.snrp-dashboard-grid-3 {
+    display: grid;
+
+    grid-template-columns:
+        1.4fr
+        1fr
+        .8fr;
+
+    gap: 14px;
+
+    margin-bottom: 14px;
+}
+
+
+/* =========================================================
+   FLUXO
+   ========================================================= */
+
+.snrp-process {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 22px 14px;
+
+    gap: 8px;
+}
+
+.snrp-process-item {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 7px;
+
+    text-align: center;
+
+    color: #9bb2cc;
+
+    font-size: .63rem;
+}
+
+.snrp-process-item > i {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #0758b8;
+
+    border-radius: 7px;
+
+    color: #ffffff;
+
+    font-size: 17px;
+}
+
+.snrp-process-number {
+    color: #448ed1;
+
+    font-size: .58rem;
+
+    font-weight: 700;
+}
+
+.snrp-process-arrow {
+    color: #2f7cbd;
+
+    font-size: 13px;
+
+    margin-top: 22px;
+}
+
+
+/* =========================================================
+   ACÇÕES
+   ========================================================= */
+
+.snrp-actions-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 8px;
+
+    padding: 15px;
+}
+
+.snrp-action {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 12px 10px;
+
+    border-radius: 6px;
+
+    background: rgba(3, 17, 36, .65);
+
+    border: 1px solid rgba(51, 119, 181, .2);
+
+    color: #9eb5ce;
+
+    font-size: .67rem;
+
+    text-decoration: none;
+
+    transition: .2s ease;
+}
+
+.snrp-action i {
+    color: #429cff;
+
+    font-size: 15px;
+}
+
+.snrp-action:hover {
+    color: #ffffff;
+
+    border-color: #1877d1;
+
+    background: rgba(8, 53, 105, .7);
+}
+
+
+/* =========================================================
+   UTILIZADORES
+   ========================================================= */
+
+.snrp-user-total {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 20px;
+}
+
+.snrp-user-icon {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(0, 104, 211, .18);
+
+    color: #4ba8ff;
+
+    font-size: 19px;
+}
+
+.snrp-user-total strong {
+    display: block;
+
+    color: #ffffff;
+
+    font-size: 1.5rem;
+}
+
+.snrp-user-total span {
+    color: #748daa;
+
+    font-size: .66rem;
+}
+
+.snrp-user-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 11px 18px;
+
+    border-top: 1px solid rgba(60, 120, 180, .16);
+
+    color: #6fcaab;
+
+    font-size: .62rem;
+}
+
+
+/* =========================================================
+   RECURSOS
+   ========================================================= */
+
+.snrp-resources-panel {
+    margin-bottom: 10px;
+}
+
+.snrp-resources-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 1px;
+
+    background: rgba(62, 123, 182, .15);
+}
+
+.snrp-resource {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 15px;
+
+    background: #071a35;
+}
+
+.snrp-resource > i {
+    color: #4ba8ff;
+
+    font-size: 19px;
+}
+
+.snrp-resource strong {
+    display: block;
+
+    color: #dceafa;
+
+    font-size: .68rem;
+}
+
+.snrp-resource span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #657f9e;
+
+    font-size: .57rem;
+
+    line-height: 1.3;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 1199.98px) {
+
+    .snrp-stats-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .snrp-dashboard-grid-3 {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .snrp-dashboard-grid-3 .snrp-panel:last-child {
+        grid-column: span 2;
+    }
+
+    .snrp-resources-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+}
+
+
+@media (max-width: 767.98px) {
+
+    .snrp-dashboard-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .snrp-dashboard-user {
+        width: 100%;
+    }
+
+    .snrp-stats-grid,
+    .snrp-dashboard-grid,
+    .snrp-dashboard-grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .snrp-dashboard-grid-3 .snrp-panel:last-child {
+        grid-column: auto;
+    }
+
+    .snrp-overview-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .snrp-resources-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+
+@media (max-width: 575.98px) {
+
+    .snrp-overview-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .snrp-process {
+        flex-wrap: wrap;
+    }
+
+}
+
+/* =========================================================
+   SNRP - AUTENTICAÇÃO
+   ========================================================= */
+
+.snrp-auth-body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family:
+        "Figtree",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background: #f4f7fb;
+}
+
+
+/* =========================================================
+   CONTAINER PRINCIPAL
+   ========================================================= */
+
+.snrp-auth-container {
+    min-height: 100vh;
+
+    display: flex;
+
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   ÁREA ESQUERDA
+   ========================================================= */
+
+.snrp-auth-brand {
+    width: 46%;
+
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #052f5f 0%,
+            #063b73 50%,
+            #0b63b6 100%
+        );
+
+    color: #ffffff;
+}
+
+
+/* Efeito decorativo */
+
+.snrp-auth-brand::before {
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    right: -180px;
+    bottom: -160px;
+}
+
+.snrp-auth-brand::after {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,0.06);
+
+    left: -150px;
+    top: -120px;
+}
+
+
+/* Conteúdo */
+
+.snrp-auth-brand-content {
+    width: 80%;
+
+    max-width: 480px;
+
+    position: relative;
+
+    z-index: 2;
+
+    text-align: left;
+}
+
+
+/* Ícone */
+
+.snrp-auth-logo {
+    width: 72px;
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 24px;
+
+    border-radius: 16px;
+
+    background: rgba(255,255,255,0.12);
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    font-size: 34px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.15);
+}
+
+
+/* SNRP */
+
+.snrp-auth-brand h1 {
+    margin: 0;
+
+    font-size: 3rem;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    color: #ffffff;
+}
+
+
+/* Nome do sistema */
+
+.snrp-auth-brand h2 {
+    margin-top: 8px;
+
+    font-size: 1.35rem;
+
+    line-height: 1.45;
+
+    font-weight: 500;
+
+    color: rgba(255,255,255,0.95);
+}
+
+
+/* Descrição */
+
+.snrp-auth-brand p {
+    margin-top: 22px;
+
+    max-width: 420px;
+
+    font-size: 1rem;
+
+    line-height: 1.7;
+
+    color: rgba(255,255,255,0.75);
+}
+
+
+/* Linha */
+
+.snrp-auth-line {
+    width: 55px;
+
+    height: 3px;
+
+    margin-top: 30px;
+    margin-bottom: 18px;
+
+    border-radius: 5px;
+
+    background: #ffffff;
+}
+
+
+/* Pequeno texto */
+
+.snrp-auth-brand small {
+    color: rgba(255,255,255,0.65);
+
+    font-size: 0.85rem;
+}
+
+
+/* =========================================================
+   ÁREA DO FORMULÁRIO
+   ========================================================= */
+
+.snrp-auth-form-area {
+    width: 54%;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 40px;
+}
+
+
+/* Wrapper */
+
+.snrp-auth-form-wrapper {
+    width: 100%;
+
+    max-width: 430px;
+}
+
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.snrp-auth-header {
+    margin-bottom: 28px;
+}
+
+.snrp-auth-header h3 {
+    margin: 0;
+
+    font-size: 1.8rem;
+
+    font-weight: 700;
+
+    color: #16324f;
+}
+
+.snrp-auth-header p {
+    margin-top: 7px;
+    margin-bottom: 0;
+
+    color: #718096;
+
+    font-size: 0.95rem;
+}
+
+
+/* =========================================================
+   CARD DO LOGIN
+   ========================================================= */
+
+.snrp-auth-card {
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 12px 35px rgba(15, 45, 75, 0.08);
+}
+
+
+/* =========================================================
+   CAMPOS DO BREEZE
+   ========================================================= */
+
+.snrp-auth-card label {
+    color: #34495e !important;
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+}
+
+
+.snrp-auth-card input[type="email"],
+.snrp-auth-card input[type="password"],
+.snrp-auth-card input[type="text"] {
+    width: 100%;
+
+    min-height: 46px;
+
+    margin-top: 6px;
+
+    padding: 10px 13px;
+
+    border: 1px solid #d8e0e8;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #26384a;
+
+    font-size: 0.92rem;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.snrp-auth-card input:focus {
+    border-color: #0b63b6;
+
+    box-shadow:
+        0 0 0 3px rgba(11, 99, 182, 0.12);
+}
+
+
+/* =========================================================
+   CHECKBOX
+   ========================================================= */
+
+.snrp-auth-card input[type="checkbox"] {
+    accent-color: #0b63b6;
+}
+
+
+/* =========================================================
+   BOTÃO LOGIN
+   ========================================================= */
+
+.snrp-auth-card button {
+    min-height: 44px;
+
+    padding: 9px 22px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #063b73;
+
+    color: #ffffff;
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.snrp-auth-card button:hover {
+    background: #0b63b6;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 15px rgba(6, 59, 115, 0.22);
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+.snrp-auth-card a {
+    color: #0b63b6;
+
+    font-size: 0.85rem;
+
+    text-decoration: none;
+}
+
+
+.snrp-auth-card a:hover {
+    color: #063b73;
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   MENSAGENS DE ERRO
+   ========================================================= */
+
+.snrp-auth-card [role="alert"] {
+    color: #dc3545;
+
+    font-size: 0.82rem;
+}
+
+
+/* =========================================================
+   RODAPÉ
+   ========================================================= */
+
+.snrp-auth-footer {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-top: 25px;
+
+    color: #8a97a6;
+
+    font-size: 0.78rem;
+
+    text-align: center;
+}
+
+
+.snrp-auth-footer-separator {
+    color: #c5ced8;
+}
+
+
+/* =========================================================
+   LOGO MOBILE
+   ========================================================= */
+
+.snrp-auth-mobile-logo {
+    display: none;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .snrp-auth-brand {
+        width: 40%;
+    }
+
+    .snrp-auth-form-area {
+        width: 60%;
+        padding: 30px;
+    }
+
+    .snrp-auth-brand-content {
+        width: 82%;
+    }
+
+    .snrp-auth-brand h1 {
+        font-size: 2.4rem;
+    }
+
+    .snrp-auth-brand h2 {
+        font-size: 1.1rem;
+    }
+
+}
+
+
+@media (max-width: 767.98px) {
+
+    .snrp-auth-container {
+        display: block;
+
+        min-height: 100vh;
+    }
+
+    .snrp-auth-brand {
+        width: 100%;
+
+        min-height: auto;
+
+        padding: 35px 25px;
+    }
+
+    .snrp-auth-brand-content {
+        width: 100%;
+
+        text-align: center;
+    }
+
+    .snrp-auth-logo {
+        width: 60px;
+        height: 60px;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        margin-bottom: 15px;
+
+        font-size: 28px;
+    }
+
+    .snrp-auth-brand h1 {
+        font-size: 2.2rem;
+    }
+
+    .snrp-auth-brand h2 {
+        font-size: 1rem;
+    }
+
+    .snrp-auth-brand p,
+    .snrp-auth-brand small,
+    .snrp-auth-line {
+        display: none;
+    }
+
+    .snrp-auth-form-area {
+        width: 100%;
+
+        min-height: auto;
+
+        padding: 35px 20px 25px;
+    }
+
+    .snrp-auth-header {
+        text-align: center;
+    }
+
+    .snrp-auth-mobile-logo {
+        display: flex;
+
+        width: 48px;
+        height: 48px;
+
+        margin: 0 auto 15px;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 12px;
+
+        background: #edf5fc;
+
+        color: #063b73;
+
+        font-size: 23px;
+    }
+
+}
+
+
+@media (max-width: 575.98px) {
+
+    .snrp-auth-card {
+        padding: 22px;
+    }
+
+    .snrp-auth-footer {
+        flex-wrap: wrap;
+    }
+
+}
+/* =========================================================
+   SNRP - PÁGINA DE AUTENTICAÇÃO
+   CABEÇALHO + LOGIN + FOOTER
+   ========================================================= */
+
+.snrp-auth-body {
+    margin: 0;
+
+    min-height: 100vh;
+
+    font-family:
+        "Figtree",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background: #f4f7fb;
+}
+
+
+.snrp-auth-page {
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    background: #f4f7fb;
+}
+
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.snrp-auth-header-bar {
+
+    min-height: 68px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 32px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e3eaf2;
+
+    box-shadow:
+        0 2px 8px rgba(20, 50, 80, 0.05);
+
+}
+
+
+.snrp-auth-header-brand {
+
+    display: flex;
+
+    align-items: center;
+}
+
+
+.snrp-auth-brand-link {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: #16324f;
+
+    text-decoration: none;
+
+}
+
+
+.snrp-auth-brand-link:hover {
+
+    color: #16324f;
+
+    text-decoration: none;
+
+}
+
+
+.snrp-auth-brand-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #063b73,
+            #0b63b6
+        );
+
+    color: #ffffff;
+
+    font-size: 20px;
+
+    box-shadow:
+        0 4px 12px rgba(6, 59, 115, 0.20);
+
+}
+
+
+.snrp-auth-brand-name {
+
+    display: block;
+
+    color: #063b73;
+
+    font-size: 1.05rem;
+
+    font-weight: 800;
+
+    letter-spacing: .5px;
+
+}
+
+
+.snrp-auth-brand-description {
+
+    display: block;
+
+    margin-top: 1px;
+
+    color: #7a8b9d;
+
+    font-size: .72rem;
+
+}
+
+
+/* =========================================================
+   ÁREA PRINCIPAL
+   ========================================================= */
+
+.snrp-auth-main {
+
+    flex: 1;
+
+    display: flex;
+
+    align-items: stretch;
+
+}
+
+
+/* =========================================================
+   CONTAINER LOGIN
+   ========================================================= */
+
+.snrp-auth-container {
+
+    width: 100%;
+
+    min-height: 600px;
+
+    display: flex;
+
+    background: #ffffff;
+
+}
+
+
+/* =========================================================
+   PAINEL AZUL
+   ========================================================= */
+
+.snrp-auth-brand-panel {
+
+    width: 46%;
+
+    min-height: 600px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #052f5f 0%,
+            #063b73 50%,
+            #0b63b6 100%
+        );
+
+    color: #ffffff;
+
+}
+
+
+.snrp-auth-brand-panel::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+
+    height: 420px;
+
+    right: -180px;
+
+    bottom: -160px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,.08);
+
+}
+
+
+.snrp-auth-brand-panel::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+
+    height: 300px;
+
+    left: -150px;
+
+    top: -120px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,.06);
+
+}
+
+
+.snrp-auth-brand-content {
+
+    width: 80%;
+
+    max-width: 480px;
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+.snrp-auth-logo {
+
+    width: 70px;
+
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-bottom: 20px;
+
+    border-radius: 15px;
+
+    background: rgba(255,255,255,.12);
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    font-size: 32px;
+
+}
+
+
+.snrp-auth-brand-content h1 {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 3rem;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+}
+
+
+.snrp-auth-brand-content h2 {
+
+    margin-top: 8px;
+
+    color: rgba(255,255,255,.95);
+
+    font-size: 1.3rem;
+
+    line-height: 1.45;
+
+    font-weight: 500;
+
+}
+
+
+.snrp-auth-brand-content p {
+
+    max-width: 420px;
+
+    margin-top: 20px;
+
+    color: rgba(255,255,255,.75);
+
+    font-size: .95rem;
+
+    line-height: 1.7;
+
+}
+
+
+.snrp-auth-line {
+
+    width: 55px;
+
+    height: 3px;
+
+    margin-top: 28px;
+
+    margin-bottom: 16px;
+
+    border-radius: 4px;
+
+    background: #ffffff;
+
+}
+
+
+.snrp-auth-brand-content small {
+
+    color: rgba(255,255,255,.65);
+
+    font-size: .82rem;
+
+}
+
+
+/* =========================================================
+   ÁREA DO FORMULÁRIO
+   ========================================================= */
+
+.snrp-auth-form-area {
+
+    width: 54%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 50px 40px;
+
+    background: #f8fafc;
+
+}
+
+
+.snrp-auth-form-wrapper {
+
+    width: 100%;
+
+    max-width: 430px;
+
+}
+
+
+.snrp-auth-form-header {
+
+    margin-bottom: 22px;
+
+}
+
+
+.snrp-auth-form-header h3 {
+
+    margin: 0;
+
+    color: #16324f;
+
+    font-size: 1.75rem;
+
+    font-weight: 700;
+
+}
+
+
+.snrp-auth-form-header p {
+
+    margin: 6px 0 0;
+
+    color: #718096;
+
+    font-size: .9rem;
+
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.snrp-auth-card {
+
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e8f0;
+
+    border-radius: 13px;
+
+    box-shadow:
+        0 12px 35px rgba(15,45,75,.08);
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+.snrp-auth-mobile-logo {
+
+    display: none;
+
+}
+
+
+@media (max-width: 767.98px) {
+
+    .snrp-auth-header-bar {
+
+        min-height: 62px;
+
+        padding: 0 18px;
+
+    }
+
+
+    .snrp-auth-brand-description {
+
+        display: none;
+
+    }
+
+
+    .snrp-auth-container {
+
+        display: block;
+
+    }
+
+
+    .snrp-auth-brand-panel {
+
+        width: 100%;
+
+        min-height: auto;
+
+        padding: 35px 20px;
+
+    }
+
+
+    .snrp-auth-brand-content {
+
+        width: 100%;
+
+        text-align: center;
+
+    }
+
+
+    .snrp-auth-logo {
+
+        width: 58px;
+
+        height: 58px;
+
+        margin-left: auto;
+
+        margin-right: auto;
+
+    }
+
+
+    .snrp-auth-brand-content h1 {
+
+        font-size: 2.2rem;
+
+    }
+
+
+    .snrp-auth-brand-content h2 {
+
+        font-size: 1rem;
+
+    }
+
+
+    .snrp-auth-brand-content p,
+
+    .snrp-auth-brand-content small,
+
+    .snrp-auth-line {
+
+        display: none;
+
+    }
+
+
+    .snrp-auth-form-area {
+
+        width: 100%;
+
+        padding: 35px 20px;
+
+    }
+
+
+    .snrp-auth-form-header {
+
+        text-align: center;
+
+    }
+
+
+    .snrp-auth-mobile-logo {
+
+        width: 48px;
+
+        height: 48px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        margin: 0 auto 14px;
+
+        border-radius: 11px;
+
+        background: #edf5fc;
+
+        color: #063b73;
+
+        font-size: 22px;
+
+    }
+
+
+    .snrp-auth-card {
+
+        padding: 22px;
+
+    }
+
+}

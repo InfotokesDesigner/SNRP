@@ -2,6 +2,9 @@ import './bootstrap';
 
 import Alpine from 'alpinejs';
 
+import 'bootstrap';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 import 'admin-lte';
 
 import L from 'leaflet';

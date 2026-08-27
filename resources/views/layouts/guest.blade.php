@@ -1,30 +1,168 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <meta charset="utf-8">
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>
+        @yield('title', 'SNRP - Autenticação')
+    </title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+
+    <link
+        href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+</head>
+
+<body class="snrp-auth-body">
+
+    <div class="snrp-auth-page">
+
+        {{-- =====================================================
+             CABEÇALHO DE AUTENTICAÇÃO
+             ===================================================== --}}
+
+        <header class="snrp-auth-header-bar">
+
+            <div class="snrp-auth-header-brand">
+
+                <a
+                    href="{{ url('/') }}"
+                    class="snrp-auth-brand-link"
+                >
+
+                    <div class="snrp-auth-brand-icon">
+
+                        <i class="bi bi-buildings"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span class="snrp-auth-brand-name">
+                            SNRP
+                        </span>
+
+                        <span class="snrp-auth-brand-description">
+                            Sistema Nacional de Registo Patrimonial
+                        </span>
+
+                    </div>
+
                 </a>
+
             </div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
+        </header>
+
+
+        {{-- =====================================================
+             CONTEÚDO DO LOGIN
+             ===================================================== --}}
+
+        <main class="snrp-auth-main">
+
+            <div class="snrp-auth-container">
+
+                {{-- LADO ESQUERDO --}}
+
+                <div class="snrp-auth-brand-panel">
+
+                    <div class="snrp-auth-brand-content">
+
+                        <div class="snrp-auth-logo">
+
+                            <i class="bi bi-buildings"></i>
+
+                        </div>
+
+                        <h1>
+                            SNRP
+                        </h1>
+
+                        <h2>
+                            Sistema Nacional de
+                            Registo Patrimonial
+                        </h2>
+
+                        <p>
+                            Plataforma de registo, organização,
+                            consulta e gestão do património.
+                        </p>
+
+                        <div class="snrp-auth-line"></div>
+
+                        <small>
+                            Gestão patrimonial segura e organizada
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                {{-- LADO DIREITO --}}
+
+                <div class="snrp-auth-form-area">
+
+                    <div class="snrp-auth-form-wrapper">
+
+                        <div class="snrp-auth-form-header">
+
+                            <div class="snrp-auth-mobile-logo">
+
+                                <i class="bi bi-buildings"></i>
+
+                            </div>
+
+                            <h3>
+                                Bem-vindo!
+                            </h3>
+
+                            <p>
+                                Entre na sua conta para continuar.
+                            </p>
+
+                        </div>
+
+
+                        {{-- FORMULÁRIO BREEZE --}}
+
+                        <div class="snrp-auth-card">
+
+                            {{ $slot }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
-        </div>
-    </body>
+
+        </main>
+
+
+        {{-- =====================================================
+             FOOTER
+             ===================================================== --}}
+
+        @include('partials.snrp-footer')
+
+    </div>
+
+</body>
+
 </html>

@@ -511,7 +511,7 @@
     <div class="hero-content">
 
         <h1>
-            Sistema de <span>Registo Patrimonial</span>
+            Sistema Nacional de <span>Registo Patrimonial</span>
         </h1>
 
         <p>

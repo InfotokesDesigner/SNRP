@@ -1,4 +1,4 @@
-```blade
+
 @extends('layouts.snrp.app')
 
 @section('title', 'Instituições')
