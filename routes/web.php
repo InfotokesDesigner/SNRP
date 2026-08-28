@@ -8,7 +8,7 @@ use App\Http\Controllers\PatrimonioController;
 use App\Http\Controllers\TransferenciaPatrimonialController;
 use App\Http\Controllers\FotografiaPatrimonioController;
 use App\Http\Controllers\DashboardController;
-
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -50,6 +50,16 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
+        /*
+|--------------------------------------------------------------------------
+| Utilizadores
+|--------------------------------------------------------------------------
+*/
+
+Route::resource(
+    'utilizadores',
+    UserController::class
+);
 
 });
 

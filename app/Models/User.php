@@ -20,13 +20,14 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role_id',
-        'ativo',
-        'ultimo_acesso',
-    ];
+    'name',
+    'email',
+    'password',
+    'role_id',
+    'instituicao_id',
+    'ativo',
+    'ultimo_acesso',
+];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -55,10 +56,30 @@ class User extends Authenticatable
 {
     return $this->belongsTo(Instituicao::class);
 }
+
     public function role(): BelongsTo
 {
     return $this->belongsTo(Role::class);
 }
+
+
+    /**
+     * Verifica se o utilizador possui determinada permissão.
+     */
+    public function hasPermission(string $permission): bool
+    {
+        if (!$this->role || !$this->role->ativo) {
+            return false;
+        }
+
+        return $this->role
+            ->permissions()
+            ->where('nome', $permission)
+            ->where('permissions.ativo', true)
+            ->exists();
+    }
+
+
 
 
 }

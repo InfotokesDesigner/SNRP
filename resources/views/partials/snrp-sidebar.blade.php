@@ -223,16 +223,10 @@
                 {{-- Rota será implementada na próxima etapa --}}
                 <li class="nav-item">
 
-                    <a href="#"
-                       class="nav-link disabled">
-
-                        <i class="nav-icon bi bi-person-gear"></i>
-
-                        <p>
-                            Utilizadores
-                        </p>
-
-                    </a>
+                <a href="{{ route('utilizadores.index') }}" class="nav-link">
+                             <i class="bi bi-people-fill nav-icon"></i>
+                    <p>Utilizadores</p>
+                </a>
 
                 </li>
 
