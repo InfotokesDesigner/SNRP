@@ -1,287 +1,372 @@
 @extends('layouts.snrp.app')
 
-@section('title', 'Instituições - SNRP')
-
-@section('page-title', 'Instituições')
+@section('title', 'Editar Instituição')
+@section('page-title', 'Editar Instituição')
 
 @section('content')
 
-<div class="card">
+<div class="container-fluid">
 
-    <div class="card-header">
 
-        <div class="d-flex justify-content-between align-items-center">
+{{-- CABEÇALHO --}}
+<div class="d-flex justify-content-between align-items-center mb-4">
 
-            <h3 class="card-title">
-                Lista de Instituições
-            </h3>
+    <div>
+        <h1 class="h3 mb-1">
+            <i class="bi bi-building-gear text-primary me-2"></i>
+            Editar Instituição
+        </h1>
 
-            <a href="{{ route('instituicoes.create') }}"
-               class="btn btn-primary">
+        <p class="text-muted mb-0">
+            Atualize os dados da instituição.
+        </p>
+    </div>
 
-                <i class="bi bi-plus-circle me-1"></i>
+    <a href="{{ route('instituicoes.index') }}"
+       class="btn btn-secondary">
 
-                Nova Instituição
+        <i class="bi bi-arrow-left me-1"></i>
+        Voltar
 
-            </a>
+    </a>
+
+</div>
+
+
+{{-- ERROS DE VALIDAÇÃO --}}
+@if($errors->any())
+
+    <div class="alert alert-danger alert-dismissible fade show">
+
+        <div class="fw-bold mb-2">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            Existem erros no formulário:
+        </div>
+
+        <ul class="mb-0">
+
+            @foreach($errors->all() as $error)
+
+                <li>{{ $error }}</li>
+
+            @endforeach
+
+        </ul>
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+
+    </div>
+
+@endif
+
+
+{{-- FORMULÁRIO --}}
+<form method="POST"
+      action="{{ route('instituicoes.update', $instituicao) }}">
+
+    @csrf
+    @method('PUT')
+
+
+    {{-- DADOS DA INSTITUIÇÃO --}}
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-primary text-white">
+
+            <h5 class="mb-0">
+                <i class="bi bi-building me-2"></i>
+                Dados da Instituição
+            </h5>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                {{-- NOME --}}
+                <div class="col-md-6">
+
+                    <label for="nome" class="form-label">
+                        Nome da instituição
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+                            <i class="bi bi-building"></i>
+                        </span>
+
+                        <input type="text"
+                               id="nome"
+                               name="nome"
+                               class="form-control @error('nome') is-invalid @enderror"
+                               value="{{ old('nome', $instituicao->nome) }}"
+                               required>
+
+                    </div>
+
+                    @error('nome')
+                        <div class="text-danger small mt-1">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+
+
+                {{-- SIGLA --}}
+                <div class="col-md-6">
+
+                    <label for="sigla" class="form-label">
+                        Sigla
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+                            <i class="bi bi-tag"></i>
+                        </span>
+
+                        <input type="text"
+                               id="sigla"
+                               name="sigla"
+                               class="form-control @error('sigla') is-invalid @enderror"
+                               value="{{ old('sigla', $instituicao->sigla) }}"
+                               required>
+
+                    </div>
+
+                    @error('sigla')
+                        <div class="text-danger small mt-1">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+
+
+                {{-- NIF --}}
+                <div class="col-md-6">
+
+                    <label for="nif" class="form-label">
+                        NIF
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+                            <i class="bi bi-card-text"></i>
+                        </span>
+
+                        <input type="text"
+                               id="nif"
+                               name="nif"
+                               class="form-control @error('nif') is-invalid @enderror"
+                               value="{{ old('nif', $instituicao->nif) }}">
+
+                    </div>
+
+                    @error('nif')
+                        <div class="text-danger small mt-1">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+
+
+                {{-- TELEFONE --}}
+                <div class="col-md-6">
+
+                    <label for="telefone" class="form-label">
+                        Telefone
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+                            <i class="bi bi-telephone"></i>
+                        </span>
+
+                        <input type="text"
+                               id="telefone"
+                               name="telefone"
+                               class="form-control @error('telefone') is-invalid @enderror"
+                               value="{{ old('telefone', $instituicao->telefone) }}">
+
+                    </div>
+
+                    @error('telefone')
+                        <div class="text-danger small mt-1">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+
+
+                {{-- EMAIL --}}
+                <div class="col-md-6">
+
+                    <label for="email" class="form-label">
+                        E-mail
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+                            <i class="bi bi-envelope"></i>
+                        </span>
+
+                        <input type="email"
+                               id="email"
+                               name="email"
+                               class="form-control @error('email') is-invalid @enderror"
+                               value="{{ old('email', $instituicao->email) }}">
+
+                    </div>
+
+                    @error('email')
+                        <div class="text-danger small mt-1">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+
+
+                {{-- LOGO --}}
+                <div class="col-md-6">
+
+                    <label for="logo" class="form-label">
+                        Logo
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+                            <i class="bi bi-image"></i>
+                        </span>
+
+                        <input type="text"
+                               id="logo"
+                               name="logo"
+                               class="form-control @error('logo') is-invalid @enderror"
+                               value="{{ old('logo', $instituicao->logo) }}"
+                               placeholder="Caminho ou referência da logo">
+
+                    </div>
+
+                    @error('logo')
+                        <div class="text-danger small mt-1">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+
+
+                {{-- ENDEREÇO --}}
+                <div class="col-12">
+
+                    <label for="endereco" class="form-label">
+                        Endereço
+                    </label>
+
+                    <textarea id="endereco"
+                              name="endereco"
+                              rows="3"
+                              class="form-control @error('endereco') is-invalid @enderror"
+                              placeholder="Endereço da instituição">{{ old('endereco', $instituicao->endereco) }}</textarea>
+
+                    @error('endereco')
+                        <div class="text-danger small mt-1">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
 
-    <div class="card-body">
-
-        {{-- Mensagem de sucesso --}}
-        @if(session('success'))
-
-            <div class="alert alert-success alert-dismissible fade show">
-
-                <i class="bi bi-check-circle me-2"></i>
-
-                {{ session('success') }}
-
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="alert">
-                </button>
-
-            </div>
-
-        @endif
-
-
-        {{-- Mensagem de erro --}}
-        @if(session('error'))
-
-            <div class="alert alert-danger alert-dismissible fade show">
-
-                <i class="bi bi-exclamation-triangle me-2"></i>
-
-                {{ session('error') }}
-
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="alert">
-                </button>
-
-            </div>
-
-        @endif
-
-
-        <div class="table-responsive">
-
-            <table class="table table-bordered table-hover align-middle">
-
-                <thead>
-
-                    <tr>
-
-                        <th style="width: 60px;">
-                            #
-                        </th>
-
-                        <th>
-                            Instituição
-                        </th>
-
-                        <th>
-                            Sigla
-                        </th>
-
-                        <th>
-                            NIF
-                        </th>
-
-                        <th>
-                            Telefone
-                        </th>
-
-                        <th>
-                            Email
-                        </th>
-
-                        <th>
-                            Estado
-                        </th>
-
-                        <th style="width: 180px;">
-                            Ações
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    @forelse($instituicoes as $instituicao)
-
-                        <tr>
-
-                            <td>
-                                {{ $instituicao->id }}
-                            </td>
-
-                            <td>
-
-                                <strong>
-                                    {{ $instituicao->nome }}
-                                </strong>
-
-                            </td>
-
-                            <td>
-
-                                <span class="badge text-bg-secondary">
-
-                                    {{ $instituicao->sigla }}
-
-                                </span>
-
-                            </td>
-
-                            <td>
-                                {{ $instituicao->nif ?? '—' }}
-                            </td>
-
-                            <td>
-                                {{ $instituicao->telefone ?? '—' }}
-                            </td>
-
-                            <td>
-                                {{ $instituicao->email ?? '—' }}
-                            </td>
-
-                            <td>
-
-                                @if($instituicao->ativo)
-
-                                    <span class="badge text-bg-success">
-
-                                        <i class="bi bi-check-circle me-1"></i>
-
-                                        Ativa
-
-                                    </span>
-
-                                @else
-
-                                    <span class="badge text-bg-secondary">
-
-                                        <i class="bi bi-x-circle me-1"></i>
-
-                                        Inativa
-
-                                    </span>
-
-                                @endif
-
-                            </td>
-
-                            <td>
-
-                                <div class="btn-group">
-
-                                    <a href="{{ route('instituicoes.show', $instituicao) }}"
-                                       class="btn btn-sm btn-info"
-                                       title="Visualizar">
-
-                                        <i class="bi bi-eye"></i>
-
-                                    </a>
-
-
-                                    <a href="{{ route('instituicoes.edit', $instituicao) }}"
-                                       class="btn btn-sm btn-warning"
-                                       title="Editar">
-
-                                        <i class="bi bi-pencil"></i>
-
-                                    </a>
-
-
-                                    <form action="{{ route('instituicoes.destroy', $instituicao) }}"
-                                          method="POST"
-                                          onsubmit="return confirm('Tem certeza que deseja eliminar esta instituição?');">
-
-                                        @csrf
-
-                                        @method('DELETE')
-
-                                        <button type="submit"
-                                                class="btn btn-sm btn-danger"
-                                                title="Eliminar">
-
-                                            <i class="bi bi-trash"></i>
-
-                                        </button>
-
-                                    </form>
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                    @empty
-
-                        <tr>
-
-                            <td colspan="8"
-                                class="text-center py-5">
-
-                                <div class="text-muted">
-
-                                    <i class="bi bi-building fs-1 d-block mb-3"></i>
-
-                                    <h5>
-                                        Nenhuma instituição cadastrada
-                                    </h5>
-
-                                    <p>
-                                        Comece cadastrando a primeira instituição.
-                                    </p>
-
-                                    <a href="{{ route('instituicoes.create') }}"
-                                       class="btn btn-primary">
-
-                                        <i class="bi bi-plus-circle me-1"></i>
-
-                                        Cadastrar Instituição
-
-                                    </a>
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                    @endforelse
-
-                </tbody>
-
-            </table>
+    {{-- ESTADO --}}
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-primary text-white">
+
+            <h5 class="mb-0">
+                <i class="bi bi-toggle-on me-2"></i>
+                Estado da Instituição
+            </h5>
 
         </div>
 
 
-        {{-- Paginação --}}
+        <div class="card-body">
 
-        @if($instituicoes->hasPages())
+            <div class="form-check form-switch">
 
-            <div class="mt-3">
+                <input class="form-check-input"
+                       type="checkbox"
+                       role="switch"
+                       id="ativo"
+                       name="ativo"
+                       value="1"
+                       {{ old('ativo', $instituicao->ativo) ? 'checked' : '' }}>
 
-                {{ $instituicoes->links() }}
+                <label class="form-check-label" for="ativo">
+
+                    <strong>Instituição ativa</strong>
+
+                    <div class="text-muted small">
+                        A instituição estará disponível para utilização no sistema.
+                    </div>
+
+                </label>
 
             </div>
 
-        @endif
+        </div>
 
     </div>
+
+
+    {{-- BOTÕES --}}
+    <div class="d-flex justify-content-end gap-2 mb-4">
+
+        <a href="{{ route('instituicoes.index') }}"
+           class="btn btn-secondary">
+
+            <i class="bi bi-x-circle me-1"></i>
+            Cancelar
+
+        </a>
+
+
+        <button type="submit"
+                class="btn btn-primary">
+
+            <i class="bi bi-check-circle me-1"></i>
+            Guardar Alterações
+
+        </button>
+
+    </div>
+
+</form>
+
 
 </div>
 

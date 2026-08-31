@@ -56,14 +56,14 @@ Route::middleware('auth')->group(function () {
 |--------------------------------------------------------------------------
 */
 
+
 Route::resource(
     'utilizadores',
-    UserController::class
-);
-
+   UserController::class
+)->parameters([
+    'utilizadores' => 'utilizador',
+]);
 });
-
-
 /*
 |--------------------------------------------------------------------------
 | Módulos do SNRP
@@ -79,9 +79,11 @@ Route::middleware('auth')->group(function () {
     */
 
     Route::resource(
-        'instituicoes',
-        InstituicaoController::class
-    );
+    'instituicoes',
+    InstituicaoController::class
+)->parameters([
+    'instituicoes' => 'instituicao',
+]);
 
 
     /*

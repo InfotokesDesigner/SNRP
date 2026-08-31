@@ -107,14 +107,14 @@
                                         <a href="{{ route('instituicoes.show', $instituicao) }}"
                                            class="btn btn-sm btn-info"
                                            title="Visualizar">
-                                            <i class="fas fa-eye"></i>
+                                            <i class="bi bi-eye"></i>
                                         </a>
 
                                         {{-- EDITAR --}}
                                         <a href="{{ route('instituicoes.edit', $instituicao) }}"
                                            class="btn btn-sm btn-warning"
                                            title="Editar">
-                                            <i class="fas fa-edit"></i>
+                                            <i class="bi bi-pencil-square"></i>
                                         </a>
 
                                         {{-- EXCLUIR --}}
@@ -129,7 +129,7 @@
                                             <button type="submit"
                                                     class="btn btn-sm btn-danger"
                                                     title="Excluir">
-                                                <i class="fas fa-trash"></i>
+                                                <i class="bi bi-trash"></i>
                                             </button>
 
                                         </form>
@@ -174,4 +174,4 @@
 
 </div>
 @endsection
-```
+
