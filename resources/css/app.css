@@ -2252,6 +2252,55 @@
 
 }
 
+/* =========================================================
+   CHECKBOXES - PERMISSÕES DE PERFIS
+   ========================================================= */
+
+.permission-checkbox {
+    width: 1.15rem;
+    height: 1.15rem;
+    border: 2px solid #6c757d !important;
+    border-radius: 4px;
+    background-color: #ffffff;
+    cursor: pointer;
+    margin-top: 0.15rem;
+}
+
+.permission-checkbox:hover {
+    border-color: #0b63b6 !important;
+}
+
+.permission-checkbox:checked {
+    background-color: #0b63b6;
+    border-color: #0b63b6 !important;
+}
+
+.permission-checkbox:focus {
+    border-color: #0b63b6;
+    box-shadow: 0 0 0 0.2rem rgba(11, 99, 182, 0.15);
+}
+
+
+/* Área da permissão */
+.permission-checkbox + label {
+    cursor: pointer;
+}
+
+
+/* Melhora a leitura das permissões */
+.form-check {
+    padding: 0.65rem 0.75rem;
+    border: 1px solid #e2e6ea;
+    border-radius: 6px;
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.form-check:hover {
+    border-color: #0b63b6;
+    background-color: #f8fbff;
+}
+
 
 /* =========================================================
    MOBILE

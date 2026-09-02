@@ -169,12 +169,34 @@ class PermissionSeeder extends Seeder
                 'descricao' => 'Visualizar registos de auditoria',
             ],
 
-            // Administração
-            [
-                'nome' => 'administracao.visualizar',
-                'modulo' => 'administracao',
-                'descricao' => 'Aceder à área de administração',
-            ],
+           // Administração
+[
+    'nome' => 'administracao.visualizar',
+    'modulo' => 'administracao',
+    'descricao' => 'Aceder à área de administração',
+],
+
+// Perfis
+[
+    'nome' => 'perfis.visualizar',
+    'modulo' => 'perfis',
+    'descricao' => 'Visualizar perfis e permissões',
+],
+[
+    'nome' => 'perfis.criar',
+    'modulo' => 'perfis',
+    'descricao' => 'Criar perfis de acesso',
+],
+[
+    'nome' => 'perfis.editar',
+    'modulo' => 'perfis',
+    'descricao' => 'Editar perfis e permissões',
+],
+[
+    'nome' => 'perfis.eliminar',
+    'modulo' => 'perfis',
+    'descricao' => 'Eliminar perfis de acesso',
+],
         ];
 
         foreach ($permissions as $permission) {

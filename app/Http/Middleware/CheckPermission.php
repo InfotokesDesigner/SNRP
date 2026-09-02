@@ -1,7 +1,6 @@
 <?php
-
 namespace App\Http\Middleware;
-
+use App\Http\Middleware\CheckPermission;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
