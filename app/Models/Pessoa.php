@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Pessoa extends Model
 {
+    use Auditable;
+
     protected $fillable = [
         'user_id',
         'codigo_cidadao',
@@ -58,5 +61,4 @@ class Pessoa extends Model
             'novo_proprietario_id'
         );
     }
-
 }

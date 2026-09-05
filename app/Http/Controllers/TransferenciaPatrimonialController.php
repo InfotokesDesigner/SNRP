@@ -7,6 +7,7 @@ use App\Models\Patrimonio;
 use App\Models\TransferenciaPatrimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Services\AuditoriaService;
 
 class TransferenciaPatrimonialController extends Controller
 {
@@ -147,7 +148,7 @@ class TransferenciaPatrimonialController extends Controller
                 ]);
 
             }
-
+                   $proprietarioAnterior = $patrimonio->pessoa;
 
             /*
             |----------------------------------------------------------------------
@@ -155,7 +156,7 @@ class TransferenciaPatrimonialController extends Controller
             |----------------------------------------------------------------------
             */
 
-            TransferenciaPatrimonial::create([
+            $transferencia = TransferenciaPatrimonial::create([
 
                 'patrimonio_id' =>
                     $patrimonio->id,
@@ -188,7 +189,27 @@ class TransferenciaPatrimonialController extends Controller
 
             ]);
 
+
+            AuditoriaService::registrar(
+    'transferir',
+    'transferencias',
+    "Património {$patrimonio->codigo} transferido de {$proprietarioAnterior->nome_completo} para {$novoProprietario->nome_completo}.",
+    $transferencia,
+    [
+        'patrimonio_id' => $patrimonio->id,
+        'proprietario_anterior_id' => $proprietarioAnterior->id,
+    ],
+    [
+        'patrimonio_id' => $patrimonio->id,
+        'novo_proprietario_id' => $novoProprietario->id,
+        'data_transferencia' => $validated['data_transferencia'],
+        'observacao' => $validated['observacao'] ?? null,
+    ]
+);
+
         });
+
+        
 
 
         return redirect()

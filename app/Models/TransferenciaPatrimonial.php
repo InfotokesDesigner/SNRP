@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Traits\Auditable;
 
 class TransferenciaPatrimonial extends Model
 {
+    use Auditable;
     protected $table = 'transferencia_patrimonials';
 
     protected $fillable = [
@@ -20,6 +22,15 @@ class TransferenciaPatrimonial extends Model
     protected $casts = [
         'data_transferencia' => 'date',
     ];
+
+
+    /**
+ * Define o módulo da auditoria.
+ */
+public function getAuditoriaModulo(): string
+{
+    return 'transferencias';
+}
 
     /**
      * Patrimônio que foi transferido.

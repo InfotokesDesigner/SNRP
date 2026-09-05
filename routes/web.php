@@ -10,6 +10,7 @@ use App\Http\Controllers\FotografiaPatrimonioController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\AuditoriaController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -142,6 +143,19 @@ Route::patch('/perfis/{role}', [RoleController::class, 'update'])
 Route::delete('/perfis/{role}', [RoleController::class, 'destroy'])
     ->middleware('permission:perfis.eliminar')
     ->name('perfis.destroy');
+    /*
+|--------------------------------------------------------------------------
+| Auditoria
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/auditorias', [AuditoriaController::class, 'index'])
+    ->middleware('permission:auditoria.visualizar')
+    ->name('auditorias.index');
+
+Route::get('/auditorias/{auditoria}', [AuditoriaController::class, 'show'])
+    ->middleware('permission:auditoria.visualizar')
+    ->name('auditorias.show');
     /*
     |--------------------------------------------------------------------------
     | Instituições

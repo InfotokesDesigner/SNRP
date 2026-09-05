@@ -188,48 +188,25 @@
 
                 </li>
 
+{{-- AUDITORIA --}}
+@can('auditoria.visualizar')
 
-                {{-- RELATÓRIOS --}}
-                <li class="nav-header">
-                    RELATÓRIOS
-                </li>
+<li class="nav-item">
 
+    <a href="{{ route('auditorias.index') }}"
+       class="nav-link {{ request()->routeIs('auditorias.*') ? 'active' : '' }}">
 
-                {{-- AUDITORIA --}}
-                {{-- Rota será implementada na próxima etapa --}}
-                <li class="nav-item">
+        <i class="nav-icon bi bi-shield-check"></i>
 
-                    <a href="#"
-                       class="nav-link disabled">
+        <p>
+            Auditoria
+        </p>
 
-                        <i class="nav-icon bi bi-shield-check"></i>
+    </a>
 
-                        <p>
-                            Auditoria
-                        </p>
+</li>
 
-                    </a>
-
-                </li>
-
-
-                {{-- ADMINISTRAÇÃO --}}
-                <li class="nav-header">
-                    ADMINISTRAÇÃO
-                </li>
-
-
-                {{-- UTILIZADORES --}}
-                {{-- Rota será implementada na próxima etapa --}}
-                <li class="nav-item">
-
-                <a href="{{ route('utilizadores.index') }}" class="nav-link">
-                             <i class="bi bi-people-fill nav-icon"></i>
-                    <p>Utilizadores</p>
-                </a>
-
-                </li>
-
+@endcan
 
                 {{-- PERFIS E PERMISSÕES --}}
                 {{-- Rota será implementada na próxima etapa --}}

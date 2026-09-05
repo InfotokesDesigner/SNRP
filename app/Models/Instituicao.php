@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Instituicao extends Model
 {
+    use Auditable;
+
     protected $table = 'instituicoes';
 
     protected $fillable = [
@@ -19,6 +22,14 @@ class Instituicao extends Model
         'logo',
         'ativo'
     ];
+
+    /**
+     * Define o módulo da auditoria.
+     */
+    public function getAuditoriaModulo(): string
+    {
+        return 'instituicoes';
+    }
 
     public function users(): HasMany
     {
