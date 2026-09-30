@@ -331,16 +331,35 @@
 
 </div>
 
-<div class="col-md-6"> <div class="card shadow-sm h-100"> 
+<div class="col-md-6"> 
+    <div class="card shadow-sm h-100"> 
     <div class="card-header"> <h5 class="card-title mb-0">
          <i class="bi bi-graph-up"></i> Registos de Patrimónios </h5> </div> <div class="card-body">
-             <div style="height: 300px;"> <canvas id="graficoRegistosPatrimonios">
-
-             </canvas> 
+             <div style="height: 300px;"> 
+                <canvas id="graficoRegistosPatrimonios"></canvas> 
             </div> 
         </div>
      </div> 
     </div>
+
+
+    <!-- Terceiro gráfico -->
+<div class="col-md-6">
+    <div class="card shadow-sm h-100">
+        <div class="card-header">
+            <h5 class="card-title mb-0">
+                <i class="bi bi-arrow-left-right"></i>
+                Transferências Patrimoniais
+            </h5>
+        </div>
+
+        <div class="card-body">
+            <div style="height: 300px;">
+                <canvas id="graficoTransferencias"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
 
 </div>
     <div class="snrp-dashboard-grid-3">
@@ -641,6 +660,35 @@
         </div>
 
     </div>
+<style>
+    .snrp-dashboard-chart-grid {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: 20px;
+        width: 100%;
+    }
+
+    .snrp-dashboard-chart-grid > div {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .snrp-dashboard-chart-grid .card,
+    .snrp-dashboard-chart-grid .snrp-panel {
+        width: 100%;
+    }
+
+    .snrp-dashboard-chart-grid canvas {
+        width: 100% !important;
+    }
+
+    @media (max-width: 768px) {
+        .snrp-dashboard-chart-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
 
 </div>
 
@@ -669,119 +717,290 @@ document.getElementById('snrpConsultaForm').addEventListener('submit', function 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
-    const ctx = document
-        .getElementById('patrimoniosPorTipoChart');
+    // =========================================================
+    // 1. PATRIMÓNIOS POR TIPO
+    // =========================================================
 
-    if (!ctx) {
-        return;
-    }
+    const ctxPatrimonios = document.getElementById(
+        'patrimoniosPorTipoChart'
+    );
 
-    const dados = @json($patrimoniosPorTipo);
+    if (ctxPatrimonios) {
 
-    new Chart(ctx, {
-        type: 'bar',
+        const dadosPatrimonios = @json($patrimoniosPorTipo);
 
-        data: {
-            labels: dados.map(item => item.tipo),
+        new Chart(ctxPatrimonios, {
 
-            datasets: [{
-                label: 'Patrimónios',
-                data: dados.map(item => item.total),
+            type: 'bar',
 
-                borderWidth: 0,
+            data: {
+                labels: dadosPatrimonios.map(item => item.tipo),
 
-                borderRadius: 6,
+                datasets: [{
+                    label: 'Patrimónios',
 
-                maxBarThickness: 45
-            }]
-        },
+                    data: dadosPatrimonios.map(item => item.total),
 
-        options: {
-            responsive: true,
+                    backgroundColor: '#0d6efd',
 
-            maintainAspectRatio: false,
+                    borderColor: '#0a58ca',
 
-            plugins: {
-                legend: {
-                    display: false
-                }
+                    borderWidth: 1,
+
+                    borderRadius: 8,
+
+                    maxBarThickness: 55
+                }]
             },
 
-            scales: {
-                y: {
-                    beginAtZero: true,
+            options: {
 
-                    ticks: {
-                        precision: 0
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                animation: {
+                    duration: 1000
+                },
+
+                plugins: {
+
+                    legend: {
+                        display: false
                     },
 
-                    grid: {
-                        color: '#edf0f4'
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return ' ' + context.raw + ' património(s)';
+                            }
+                        }
                     }
                 },
 
-                x: {
-                    grid: {
-                        display: false
+                scales: {
+
+                    y: {
+                        beginAtZero: true,
+
+                        ticks: {
+                            precision: 0
+                        },
+
+                        grid: {
+                            color: '#e9ecef'
+                        }
+                    },
+
+                    x: {
+                        grid: {
+                            display: false
+                        }
                     }
                 }
             }
-        }
-    });
+        });
+    }
 
-    const ctxRegistos = document.getElementById('graficoRegistosPatrimonios');
 
-new Chart(ctxRegistos, {
+    // =========================================================
+    // 2. REGISTOS DE PATRIMÓNIOS
+    // =========================================================
 
-type: 'line',
+    const ctxRegistos = document.getElementById(
+        'graficoRegistosPatrimonios'
+    );
 
-data: {
+    if (ctxRegistos) {
 
-labels: @json($labelsRegistos),
+        new Chart(ctxRegistos, {
 
-datasets: [{
+            type: 'line',
 
-label: 'Patrimónios registados',
+            data: {
 
-data: @json($dadosRegistos),
+                labels: @json($labelsRegistos),
 
-borderWidth: 3,
+                datasets: [{
 
-tension: 0.3,
+                    label: 'Patrimónios registados',
 
-fill: false,
+                    data: @json($dadosRegistos),
 
-pointRadius: 4
+                    borderColor: '#0d6efd',
 
-}]
+                    backgroundColor: 'rgba(13, 110, 253, 0.12)',
 
-},
+                    borderWidth: 3,
 
-options: {
+                    tension: 0.35,
 
-responsive: true,
+                    fill: true,
 
-maintainAspectRatio: false,
+                    pointRadius: 5,
 
-scales: {
+                    pointHoverRadius: 7,
 
-y: {
+                    pointBorderWidth: 2,
 
-beginAtZero: true,
+                    pointBackgroundColor: '#ffffff',
 
-ticks: {
+                    pointBorderColor: '#0d6efd'
+                }]
+            },
 
-precision: 0
+            options: {
 
-}
+                responsive: true,
 
-}
+                maintainAspectRatio: false,
 
-}
+                animation: {
+                    duration: 1000
+                },
 
-}
+                plugins: {
 
-});
+                    legend: {
+                        display: true,
+
+                        position: 'top'
+                    },
+
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return ' ' + context.raw + ' património(s)';
+                            }
+                        }
+                    }
+                },
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        ticks: {
+                            precision: 0
+                        },
+
+                        grid: {
+                            color: '#e9ecef'
+                        }
+                    },
+
+                    x: {
+
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+
+    // =========================================================
+    // 3. TRANSFERÊNCIAS PATRIMONIAIS
+    // =========================================================
+
+    const ctxTransferencias = document.getElementById(
+        'graficoTransferencias'
+    );
+
+    if (ctxTransferencias) {
+
+        new Chart(ctxTransferencias, {
+
+            type: 'line',
+
+            data: {
+
+                labels: @json($labelsTransferencias),
+
+                datasets: [{
+
+                    label: 'Transferências',
+
+                    data: @json($dadosTransferencias),
+
+                    borderColor: '#f39c12',
+
+                    backgroundColor: 'rgba(243, 156, 18, 0.12)',
+
+                    borderWidth: 3,
+
+                    tension: 0.35,
+
+                    fill: true,
+
+                    pointRadius: 5,
+
+                    pointHoverRadius: 7,
+
+                    pointBorderWidth: 2,
+
+                    pointBackgroundColor: '#ffffff',
+
+                    pointBorderColor: '#f39c12'
+                }]
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                animation: {
+                    duration: 1000
+                },
+
+                plugins: {
+
+                    legend: {
+                        display: true,
+
+                        position: 'top'
+                    },
+
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return ' ' + context.raw + ' transferência(s)';
+                            }
+                        }
+                    }
+                },
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        ticks: {
+                            precision: 0
+                        },
+
+                        grid: {
+                            color: '#e9ecef'
+                        }
+                    },
+
+                    x: {
+
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    }
 
 });
 </script>

@@ -36,7 +36,7 @@ class DashboardController extends Controller
 
 
 
-            $registosPatrimonios = Patrimonio::selectRaw('YEAR(created_at) as ano, MONTH(created_at) as mes, COUNT(*) as total')
+ $registosPatrimonios = Patrimonio::selectRaw('YEAR(created_at) as ano, MONTH(created_at) as mes, COUNT(*) as total')
 
 ->groupByRaw('YEAR(created_at), MONTH(created_at)')
 
@@ -51,29 +51,45 @@ return \Carbon\Carbon::createFromDate($item->ano, $item->mes, 1)->translatedForm
 })->values();
 
 $dadosRegistos = $registosPatrimonios->pluck('total')->values();
+$transferenciasPorMes = TransferenciaPatrimonial::selectRaw(
+        'YEAR(data_transferencia) as ano,
+        MONTH(data_transferencia) as mes,
+        COUNT(*) as total'
+    )
+    ->groupByRaw('YEAR(data_transferencia), MONTH(data_transferencia)')
+    ->orderByRaw('YEAR(data_transferencia), MONTH(data_transferencia)')
+    ->get();
 
-  $totalPatrimonios = Patrimonio::count();
+$labelsTransferencias = $transferenciasPorMes->map(function ($item) {
+    return \Carbon\Carbon::createFromDate($item->ano, $item->mes, 1)
+        ->translatedFormat('M/Y');
+})->values();
+
+$dadosTransferencias = $transferenciasPorMes
+    ->pluck('total')
+    ->values();
+
 
               
-
-       $patrimoniosEsteMes = Patrimonio::whereMonth('created_at', now()->month)
+ $patrimoniosEsteMes = Patrimonio::whereMonth('created_at', now()->month)
 
 ->whereYear('created_at', now()->year)
 
 ->count();
 
         return view('dashboard', compact(
-            'totalInstituicoes',
-            'totalPessoas',
-            'totalPatrimonios',
-            'totalUtilizadores',
-            'totalTransferencias',
-            'patrimoniosPorTipo',
-            'labelsRegistos',
-             'dadosRegistos',
-             'totalPatrimonios',
-            'patrimoniosEsteMes',
-        ));
+    'totalInstituicoes',
+    'totalPessoas',
+    'totalPatrimonios',
+    'totalUtilizadores',
+    'totalTransferencias',
+    'patrimoniosPorTipo',
+    'labelsRegistos',
+    'dadosRegistos',
+    'labelsTransferencias',
+    'dadosTransferencias',
+    'patrimoniosEsteMes',
+));
 
       
     }
