@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pessoa;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -42,9 +43,16 @@ class PessoaController extends Controller
      * Formulário para cadastrar pessoa.
      */
     public function create()
-    {
-        return view('pessoas.create');
-    }
+{
+    $utilizadores = User::where('ativo', true)
+        ->orderBy('name')
+        ->get();
+
+    return view(
+        'pessoas.create',
+        compact('utilizadores')
+    );
+}
 
 
     /**
@@ -162,68 +170,82 @@ class PessoaController extends Controller
      * Formulário de edição.
      */
     public function edit(Pessoa $pessoa)
-    {
-        return view('pessoas.edit', compact('pessoa'));
-    }
+{
+    $utilizadores = User::where('ativo', true)
+        ->orderBy('name')
+        ->get();
 
+    return view(
+        'pessoas.edit',
+        compact('pessoa', 'utilizadores')
+    );
+}
 
     /**
      * Atualiza uma pessoa.
      */
-    public function update(Request $request, Pessoa $pessoa)
-    {
-        $validated = $request->validate([
+   public function update(Request $request, Pessoa $pessoa)
+{
+    $validated = $request->validate([
 
-            'nome_completo' => 'required|string|max:255',
+        'user_id' => [
+            'nullable',
+            'exists:users,id',
+            'unique:pessoas,user_id,' . $pessoa->id,
+        ],
 
-            'bi' => 'nullable|string|max:30|unique:pessoas,bi,' . $pessoa->id,
+        'nome_completo' => 'required|string|max:255',
 
-            'nif' => 'nullable|string|max:30|unique:pessoas,nif,' . $pessoa->id,
+        'bi' => 'nullable|string|max:30|unique:pessoas,bi,' . $pessoa->id,
 
-            'data_nascimento' => 'nullable|date',
+        'nif' => 'nullable|string|max:30|unique:pessoas,nif,' . $pessoa->id,
 
-            'sexo' => 'nullable|in:Masculino,Feminino',
+        'data_nascimento' => 'nullable|date',
 
-            'telefone' => 'nullable|string|max:30',
+        'sexo' => 'nullable|in:Masculino,Feminino',
 
-            'email' => 'nullable|email|max:255',
+        'telefone' => 'nullable|string|max:30',
 
-            'morada' => 'nullable|string',
+        'email' => 'nullable|email|max:255',
 
-            'fotografia' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        'morada' => 'nullable|string',
 
-            'ativo' => 'nullable|boolean',
+        'fotografia' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
 
-        ]);
+        'ativo' => 'nullable|boolean',
 
+    ]);
 
-        $validated['ativo'] = $request->boolean('ativo');
+    $validated['ativo'] = $request->boolean('ativo');
 
+    /*
+    |--------------------------------------------------------------------------
+    | Nova fotografia
+    |--------------------------------------------------------------------------
+    */
 
-        // Nova fotografia
-        if ($request->hasFile('fotografia')) {
+    if ($request->hasFile('fotografia')) {
 
-            // Apagar fotografia antiga
-            if ($pessoa->fotografia) {
+        if ($pessoa->fotografia) {
 
-                Storage::disk('public')
-                    ->delete($pessoa->fotografia);
-            }
-
-
-            $validated['fotografia'] =
-                $request->file('fotografia')
-                    ->store('pessoas', 'public');
+            Storage::disk('public')
+                ->delete($pessoa->fotografia);
         }
 
-
-        $pessoa->update($validated);
-
-
-        return redirect()
-            ->route('pessoas.index')
-            ->with('success', 'Pessoa atualizada com sucesso.');
+        $validated['fotografia'] =
+            $request->file('fotografia')
+                ->store('pessoas', 'public');
     }
+
+    $pessoa->update($validated);
+
+    return redirect()
+        ->route('pessoas.index')
+        ->with(
+            'success',
+            'Pessoa atualizada com sucesso.'
+        );
+}
 
 
     /**
@@ -258,4 +280,51 @@ class PessoaController extends Controller
             ->route('pessoas.index')
             ->with('success', 'Pessoa eliminada com sucesso.');
     }
+
+    public function bibliotecaPatrimonial(Pessoa $pessoa)
+{
+    $pessoa->load([
+        'patrimonios' => function ($query) {
+            $query->with('tipoPatrimonio')
+                ->orderBy('codigo');
+        }
+    ]);
+
+    return view(
+        'pessoas.biblioteca-patrimonial',
+        compact('pessoa')
+    );
+}
+
+
+
+public function biblioteca(Request $request)
+{
+    $termo = trim($request->input('q', ''));
+
+    $pessoas = collect();
+
+    if ($termo !== '') {
+        $pessoas = Pessoa::query()
+            ->withCount('patrimonios')
+            ->where(function ($query) use ($termo) {
+
+                $query->where('nome_completo', 'like', "%{$termo}%")
+                    ->orWhere('nif', 'like', "%{$termo}%")
+                    ->orWhere('codigo_cidadao', 'like', "%{$termo}%");
+
+                if (is_numeric($termo)) {
+                    $query->orWhere('id', (int) $termo);
+                }
+
+            })
+            ->orderBy('nome_completo')
+            ->get();
+    }
+
+    return view(
+        'biblioteca-patrimonial.index',
+        compact('pessoas', 'termo')
+    );
+}
 }

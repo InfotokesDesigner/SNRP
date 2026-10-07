@@ -69,6 +69,37 @@
 
                 <div class="col-md-4">
 
+    <label class="form-label">
+        Utilizador associado
+    </label>
+
+    <select name="user_id" class="form-select">
+
+        <option value="">
+            Nenhum utilizador associado
+        </option>
+
+        @foreach($utilizadores as $utilizador)
+
+            <option
+                value="{{ $utilizador->id }}"
+                @selected(old('user_id', $pessoa->user_id) == $utilizador->id)
+            >
+                {{ $utilizador->name }} — {{ $utilizador->email }}
+            </option>
+
+        @endforeach
+
+    </select>
+
+    <small class="text-muted">
+        Esta conta terá acesso aos recursos associados a esta Pessoa.
+    </small>
+
+</div>
+
+                <div class="col-md-4">
+
                     <label class="form-label">BI</label>
 
                     <input

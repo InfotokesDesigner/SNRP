@@ -92,6 +92,22 @@
                 </li>
 
 
+               {{-- BIBLIOTECA PATRIMONIAL --}}
+<li class="nav-item">
+
+    <a href="{{ route('biblioteca-patrimonial.index') }}"
+       class="nav-link {{ request()->routeIs('biblioteca-patrimonial.*') ? 'active' : '' }}">
+
+        <i class="nav-icon bi bi-collection"></i>
+
+        <p>
+            Biblioteca Patrimonial
+        </p>
+
+    </a>
+
+</li>
+
                 {{-- PATRIMÓNIOS --}}
                 <li class="nav-item">
 
@@ -208,22 +224,42 @@
 
 @endcan
 
-                {{-- PERFIS E PERMISSÕES --}}
-                {{-- Rota será implementada na próxima etapa --}}
-                <li class="nav-item">
+                {{-- ADMINISTRAÇÃO --}}
+<li class="nav-header">
+    ADMINISTRAÇÃO
+</li>
 
-                    <a href="#"
-                       class="nav-link disabled">
+{{-- UTILIZADORES --}}
+<li class="nav-item">
 
-                        <i class="nav-icon bi bi-shield-lock"></i>
+    <a href="{{ route('utilizadores.index') }}"
+       class="nav-link {{ request()->routeIs('utilizadores.*') ? 'active' : '' }}">
 
-                        <p>
-                            Perfis e Permissões
-                        </p>
+        <i class="nav-icon bi bi-person-gear"></i>
 
-                    </a>
+        <p>
+            Utilizadores
+        </p>
 
-                </li>
+    </a>
+
+</li>
+
+{{-- PERFIS E PERMISSÕES --}}
+<li class="nav-item">
+
+    <a href="#"
+       class="nav-link disabled">
+
+        <i class="nav-icon bi bi-shield-lock"></i>
+
+        <p>
+            Perfis e Permissões
+        </p>
+
+    </a>
+
+</li>
 
 
                 {{-- SISTEMA --}}

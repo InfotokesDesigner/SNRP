@@ -73,6 +73,37 @@
 
                 <div class="col-md-4">
 
+    <label class="form-label">
+        Utilizador associado
+    </label>
+
+    <select name="user_id" class="form-select">
+
+        <option value="">
+            Nenhum utilizador associado
+        </option>
+
+        @foreach($utilizadores as $utilizador)
+
+            <option
+                value="{{ $utilizador->id }}"
+                @selected(old('user_id') == $utilizador->id)
+            >
+                {{ $utilizador->name }} — {{ $utilizador->email }}
+            </option>
+
+        @endforeach
+
+    </select>
+
+    <small class="text-muted">
+        Associa esta Pessoa a uma conta de acesso ao SNRP.
+    </small>
+
+</div>
+
+                <div class="col-md-4">
+
                     <label class="form-label">
                         Bilhete de Identidade (BI)
                     </label>

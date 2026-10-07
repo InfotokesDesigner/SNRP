@@ -242,107 +242,113 @@ public function store(Request $request)
     /**
      * Formulário de edição.
      */
-    public function edit(Patrimonio $patrimonio)
-    {
-        $pessoas = Pessoa::where('ativo', true)
-            ->orderBy('nome_completo')
-            ->get();
+public function edit(Patrimonio $patrimonio)
+{
+    $user = auth()->user();
 
-        $instituicoes = Instituicao::where('ativo', true)
-            ->orderBy('nome')
-            ->get();
+    $ehAdministrador = (int) $user->role_id === 1;
 
-        $tipos = TipoPatrimonio::where('ativo', true)
-            ->orderBy('nome')
-            ->get();
+    $ehProprietario = $user->pessoa
+        && (int) $user->pessoa->id === (int) $patrimonio->pessoa_id;
 
-        return view(
-            'patrimonios.edit',
-            compact(
-                'patrimonio',
-                'pessoas',
-                'instituicoes',
-                'tipos'
-            )
-        );
+    if (!$ehAdministrador && !$ehProprietario) {
+        abort(403, 'Você não tem autorização para editar este património.');
     }
 
+    $pessoas = Pessoa::where('ativo', true)
+        ->orderBy('nome_completo')
+        ->get();
+
+    $instituicoes = Instituicao::where('ativo', true)
+        ->orderBy('nome')
+        ->get();
+
+    $tipos = TipoPatrimonio::where('ativo', true)
+        ->orderBy('nome')
+        ->get();
+
+    return view(
+        'patrimonios.edit',
+        compact(
+            'patrimonio',
+            'pessoas',
+            'instituicoes',
+            'tipos'
+        )
+    );
+}
 
     /**
      * Atualiza um património.
      */
-    public function update(
-        Request $request,
-        Patrimonio $patrimonio
-    ) {
-        $validated = $request->validate([
+  public function update(
+    Request $request,
+    Patrimonio $patrimonio
+) {
+    $user = auth()->user();
 
-            'codigo' => [
-                'required',
-                'string',
-                'max:50',
-                'unique:patrimonios,codigo,' . $patrimonio->id
-            ],
+    $ehAdministrador = (int) $user->role_id === 1;
 
-            'tipo_patrimonio_id' => [
-                'required',
-                'exists:tipo_patrimonios,id'
-            ],
+    $ehProprietario = $user->pessoa
+        && (int) $user->pessoa->id === (int) $patrimonio->pessoa_id;
 
-            'pessoa_id' => [
-                'required',
-                'exists:pessoas,id'
-            ],
-
-            'instituicao_id' => [
-                'required',
-                'exists:instituicoes,id'
-            ],
-
-            'nome' => [
-                'required',
-                'string',
-                'max:255'
-            ],
-
-            'descricao' => [
-                'nullable',
-                'string'
-            ],
-
-            'localizacao' => [
-                'nullable',
-                'string'
-            ],
-
-            'latitude' => [
-                'nullable',
-                'numeric',
-                'between:-90,90'
-            ],
-
-            'longitude' => [
-                'nullable',
-                'numeric',
-                'between:-180,180'
-            ],
-
-            'estado' => [
-                'required',
-                'in:Ativo,Transferido,Inativo'
-            ],
-
-        ]);
-
-        $patrimonio->update($validated);
-
-        return redirect()
-            ->route('patrimonios.index')
-            ->with(
-                'success',
-                'Património atualizado com sucesso.'
-            );
+    if (!$ehAdministrador && !$ehProprietario) {
+        abort(403, 'Você não tem autorização para alterar este património.');
     }
+
+    $validated = $request->validate([
+        'codigo' => [
+            'required',
+            'string',
+            'max:50',
+            'unique:patrimonios,codigo,' . $patrimonio->id
+        ],
+        'tipo_patrimonio_id' => [
+            'required',
+            'exists:tipo_patrimonios,id'
+        ],
+        'instituicao_id' => [
+            'required',
+            'exists:instituicoes,id'
+        ],
+        'nome' => [
+            'required',
+            'string',
+            'max:255'
+        ],
+        'descricao' => [
+            'nullable',
+            'string'
+        ],
+        'localizacao' => [
+            'nullable',
+            'string'
+        ],
+        'latitude' => [
+            'nullable',
+            'numeric',
+            'between:-90,90'
+        ],
+        'longitude' => [
+            'nullable',
+            'numeric',
+            'between:-180,180'
+        ],
+        'estado' => [
+            'required',
+            'in:Ativo,Transferido,Inativo'
+        ],
+    ]);
+
+    $patrimonio->update($validated);
+
+    return redirect()
+        ->route('patrimonios.index')
+        ->with(
+            'success',
+            'Património atualizado com sucesso.'
+        );
+}
 /**
  * Consulta pública de um património através do código.
  */
@@ -368,17 +374,28 @@ public function consultaPublica(string $codigo)
     /**
      * Elimina um património.
      */
-    public function destroy(Patrimonio $patrimonio)
-    {
-        $patrimonio->delete();
+   public function destroy(Patrimonio $patrimonio)
+{
+    $user = auth()->user();
 
-        return redirect()
-            ->route('patrimonios.index')
-            ->with(
-                'success',
-                'Património eliminado com sucesso.'
-            );
+    $ehAdministrador = (int) $user->role_id === 1;
+
+    $ehProprietario = $user->pessoa
+        && (int) $user->pessoa->id === (int) $patrimonio->pessoa_id;
+
+    if (!$ehAdministrador && !$ehProprietario) {
+        abort(403, 'Você não tem autorização para eliminar este património.');
     }
+
+    $patrimonio->delete();
+
+    return redirect()
+        ->route('patrimonios.index')
+        ->with(
+            'success',
+            'Património eliminado com sucesso.'
+        );
+}
 
     /**
  * Consulta pública de um património pelo código.

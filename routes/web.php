@@ -182,6 +182,18 @@ Route::get('/auditorias/{auditoria}', [AuditoriaController::class, 'show'])
     );
 
 
+// BIBLIOTECA PATRIMONIAL
+Route::get(
+    '/biblioteca-patrimonial',
+    [PessoaController::class, 'biblioteca']
+)->name('biblioteca-patrimonial.index');
+
+Route::get(
+    '/pessoas/{pessoa}/biblioteca-patrimonial',
+    [PessoaController::class, 'bibliotecaPatrimonial']
+)->name('pessoas.biblioteca-patrimonial');
+
+
     /*
     |--------------------------------------------------------------------------
     | Tipos de Património

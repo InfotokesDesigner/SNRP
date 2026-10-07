@@ -59,8 +59,14 @@ class User extends Authenticatable
 }
 
     public function role(): BelongsTo
-{
+ {
     return $this->belongsTo(Role::class);
+
+    }
+
+    public function pessoa(): \Illuminate\Database\Eloquent\Relations\HasOne
+{
+    return $this->hasOne(Pessoa::class);
 }
 
 
@@ -70,10 +76,11 @@ class User extends Authenticatable
     /**
  * Define o módulo da auditoria.
  */
-                 public function getAuditoriaModulo(): string
-{
+    public function getAuditoriaModulo(): string
+       {
          return 'utilizadores';
-    }public function hasPermission(string $permission): bool
+    }
+    public function hasPermission(string $permission): bool
     {
         if (!$this->role || !$this->role->ativo) {
             return false;
@@ -84,6 +91,8 @@ class User extends Authenticatable
             ->where('nome', $permission)
             ->where('permissions.ativo', true)
             ->exists();
+
+            
     }
 
 
