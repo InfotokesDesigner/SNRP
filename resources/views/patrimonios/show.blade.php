@@ -16,22 +16,30 @@
         </h3>
 
         <div>
+<a href="{{ route('patrimonios.edit', $patrimonio) }}"
+   class="btn btn-warning">
 
-            <a href="{{ route('patrimonios.edit', $patrimonio) }}"
-               class="btn btn-warning">
+    <i class="bi bi-pencil me-1"></i>
+    Editar
 
-                <i class="bi bi-pencil me-1"></i>
-                Editar
+</a>
 
-            </a>
+<a href="{{ route('patrimonios.certificado', $patrimonio) }}"
+   class="btn btn-primary"
+   target="_blank">
 
-            <a href="{{ route('patrimonios.index') }}"
-               class="btn btn-secondary">
+    <i class="bi bi-file-earmark-text me-1"></i>
+    Certificado
 
-                <i class="bi bi-arrow-left me-1"></i>
-                Voltar
+</a>
 
-            </a>
+<a href="{{ route('patrimonios.index') }}"
+   class="btn btn-secondary">
+
+    <i class="bi bi-arrow-left me-1"></i>
+    Voltar
+
+</a>
 
         </div>
 

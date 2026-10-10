@@ -14,6 +14,7 @@ use App\Http\Controllers\AuditoriaController;
 use Illuminate\Support\Facades\Route;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Página inicial
@@ -218,6 +219,14 @@ Route::get(
         'patrimonios',
         PatrimonioController::class
     );
+
+
+
+    // CERTIFICADO DO PATRIMÓNIO
+Route::get(
+    '/patrimonios/{patrimonio}/certificado',
+    [PatrimonioController::class, 'certificado']
+)->name('patrimonios.certificado');
 
     /*
 |--------------------------------------------------------------------------

@@ -419,4 +419,18 @@ public function consulta($codigo)
         compact('patrimonio')
     );
 }
+
+public function certificado(Patrimonio $patrimonio)
+{
+    $patrimonio->load([
+        'pessoa',
+        'tipoPatrimonio',
+        'instituicao',
+    ]);
+
+    return view(
+        'patrimonios.certificado',
+        compact('patrimonio')
+    );
+}
 }

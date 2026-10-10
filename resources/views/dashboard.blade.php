@@ -1004,5 +1004,110 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 </script>
+<style>
+    /* ================================
+       IMPRESSÃO DO DASHBOARD SNRP
+       ================================ */
+
+    @media print {
+
+        /* Ocultar elementos que não interessam na impressão */
+        .no-print,
+        .main-sidebar,
+        .snrp-sidebar,
+        .snrp-header,
+        .navbar,
+        .breadcrumb,
+        .btn,
+        button,
+        .sidebar,
+        .main-footer {
+            display: none !important;
+        }
+
+        /* Retirar margens e ocupar melhor a folha */
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            background: #fff !important;
+            font-size: 14px !important;
+        }
+
+        .app-wrapper,
+        .app-main,
+        .app-content,
+        .content-wrapper,
+        .container-fluid {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        /* Esconder o título "Dashboard" na impressão */
+        .content-header {
+            display: none !important;
+        }
+
+        /* Tamanho geral dos cartões */
+        .card {
+            font-size: 14px !important;
+            margin-bottom: 15px !important;
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+        }
+
+        .card-header {
+            font-size: 15px !important;
+            font-weight: 600 !important;
+        }
+
+        .card-body {
+            font-size: 14px !important;
+        }
+
+        /* Números dos indicadores */
+        .small-box h3,
+        .info-box-number {
+            font-size: 25px !important;
+            font-weight: 700 !important;
+        }
+
+        .small-box p,
+        .info-box-text {
+            font-size: 13px !important;
+        }
+
+        /* Tabelas */
+        table {
+            width: 100% !important;
+            font-size: 13px !important;
+        }
+
+        th,
+        td {
+            padding: 7px 8px !important;
+            font-size: 13px !important;
+        }
+
+        /* Gráficos */
+        canvas {
+            max-width: 100% !important;
+        }
+
+        /* Evitar cortes feios */
+        .row,
+        .card,
+        .table-responsive {
+            page-break-inside: avoid !important;
+        }
+
+        /* Configuração da página */
+        @page {
+            size: A4 landscape;
+            margin: 10mm;
+        }
+    }
+</style>
 
 @endsection
